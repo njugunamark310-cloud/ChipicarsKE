@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="description"
+    content="ChipicarsKE - Find quality Japanese imports and verified cars across Kenya."
+>
+
+<title>ChipicarsKE | Find Your Next Drive</title>
+
+<link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <h2>Chipicars<span>KE</span></h2>
+        <p>Find Your Next Drive</p>
+    </div>
+
+
+    <nav aria-label="Main navigation">
+
+        <a href="#home">Home</a>
+
+        <a href="#browse">
+            Browse Cars
+        </a>
+
+        <a href="#compare">
+            Compare
+        </a>
+
+        <a href="#garage">
+            Garage
+        </a>
+
+        <a href="#sell">
+            Sell
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <button
+            class="favourite-button"
+            type="button"
+            aria-label="View favourite cars"
+        >
+            ♡
+            <span id="favoriteCount">0</span>
+        </button>
+
+
+        <button
+            class="sell-button"
+            type="button"
+        >
+            Sell My Car
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section
+        id="home"
+        class="hero"
+    >
+
+        <div class="hero-content">
+
+
+            <div class="hero-text">
+
+                <div class="hero-badges">
+
+                    <span>
+                        ✓ Quality Cars
+                    </span>
+
+                    <span>
+                        ✓ Verified Listings
+                    </span>
+
+                </div>
+
+
+                <h1>
+                    Drive Your
+                    <span>Dreams</span>
+                    Home
+                </h1>
+
+
+                <p>
+                    Kenya's trusted marketplace for
+                    quality Japanese imports, SUVs,
+                    saloon cars and premium rides.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-button"
+                        type="button"
+                    >
+                        Browse Cars
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        type="button"
+                    >
+                        Sell Your Car
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- HERO VEHICLE -->
+
+            <div class="hero-car">
+
+                <div class="car-glow"></div>
+
+
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota_Land_Cruiser_Prado_150.jpg"
+                    alt="Toyota Land Cruiser Prado"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SEARCH
+         ===================================================== -->
+
+    <section
+        class="search-box"
+        aria-label="Search vehicles"
+    >
+
+
+        <div class="search-field">
+
+            <label for="make">
+                Make
+            </label>
+
+
+            <select id="make">
+
+                <option value="">
+                    Any Make
+                </option>
+
+                <option value="Toyota">
+                    Toyota
+                </option>
+
+                <option value="Mazda">
+                    Mazda
+                </option>
+
+                <option value="Subaru">
+                    Subaru
+                </option>
+
+                <option value="Nissan">
+                    Nissan
+                </option>
+
+                <option value="BMW">
+                    BMW
+                </option>
+
+                <option value="Honda">
+                    Honda
+                </option>
+
+                <option value="Mercedes">
+                    Mercedes-Benz
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="search-field">
+
+            <label for="model">
+                Model
+            </label>
+
+
+            <select id="model">
+
+                <option value="">
+                    Any Model
+                </option>
+
+                <option value="Prado">
+                    Land Cruiser Prado
+                </option>
+
+                <option value="Harrier">
+                    Toyota Harrier
+                </option>
+
+                <option value="CX5">
+                    Mazda CX-5
+                </option>
+
+                <option value="Forester">
+                    Subaru Forester
+                </option>
+
+                <option value="XTrail">
+                    Nissan X-Trail
+                </option>
+
+                <option value="X5">
+                    BMW X5
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="search-field">
+
+            <label for="price">
+                Price
+            </label>
+
+
+            <select id="price">
+
+                <option value="">
+                    Any Price
+                </option>
+
+                <option value="3">
+                    Under KSh 3M
+                </option>
+
+                <option value="5">
+                    Under KSh 5M
+                </option>
+
+                <option value="10">
+                    Under KSh 10M
+                </option>
+
+                <option value="15">
+                    Under KSh 15M
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="search-field">
+
+            <label for="location">
+                Location
+            </label>
+
+
+            <select id="location">
+
+                <option value="">
+                    Anywhere
+                </option>
+
+                <option value="Nairobi">
+                    Nairobi
+                </option>
+
+                <option value="Mombasa">
+                    Mombasa
+                </option>
+
+                <option value="Nakuru">
+                    Nakuru
+                </option>
+
+                <option value="Kisumu">
+                    Kisumu
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <button
+            class="search-button"
+            id="searchButton"
+            type="button"
+        >
+            🔍 Search Cars
+        </button>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MARKETPLACE STATS
+         ===================================================== -->
+
+    <section class="stats">
+
+
+        <div>
+
+            <h2>
+                1,200+
+            </h2>
+
+            <p>
+                Cars Listed
+            </p>
+
+        </div>
+
+
+
+        <div>
+
+            <h2>
+                500+
+            </h2>
+
+            <p>
+                Happy Customers
+            </p>
+
+        </div>
+
+
+
+        <div>
+
+            <h2>
+                15+
+            </h2>
+
+            <p>
+                Top Brands
+            </p>
+
+        </div>
+
+
+
+        <div>
+
+            <h2>
+                47
+            </h2>
+
+            <p>
+                Counties Covered
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FEATURED CARS
+         ===================================================== -->
+
+    <section
+        id="browse"
+        class="cars-section"
+    >
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    FEATURED LISTINGS
+                </span>
+
+                <h2>
+                    Featured Cars
+                </h2>
+
+                <p>
+                    Popular vehicles available
+                    from trusted sellers.
+                </p>
+
+            </div>
+
+
+            <button
+                class="outline-button"
+                type="button"
+            >
+                View All Cars →
+            </button>
+
+        </div>
+
+
+
+        <div
+            class="car-grid"
+            id="carGrid"
+        >
+
+
+            <!-- =================================================
+                 CAR 1 - PRADO
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="Toyota"
+                data-model="Prado"
+                data-price="6600000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota_Land_Cruiser_Prado_150.jpg"
+                        alt="Toyota Land Cruiser Prado"
+                        loading="lazy"
+                    >
+
+                    <span class="car-badge">
+                        JDM IMPORT
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add Prado to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        Toyota Land Cruiser Prado
+                    </h3>
+
+
+                    <p>
+                        2018 • 2.8L Diesel • Automatic
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 6.6M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CAR 2 - HARRIER
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="Toyota"
+                data-model="Harrier"
+                data-price="4800000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota_Harrier.jpg"
+                        alt="Toyota Harrier"
+                        loading="lazy"
+                    >
+
+
+                    <span class="car-badge">
+                        JAPANESE IMPORT
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add Harrier to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        Toyota Harrier
+                    </h3>
+
+
+                    <p>
+                        2018 • 2.0L Petrol • CVT
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 4.8M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CAR 3 - MAZDA CX5
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="Mazda"
+                data-model="CX5"
+                data-price="3900000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Mazda-CX-5.jpg"
+                        alt="Mazda CX-5"
+                        loading="lazy"
+                    >
+
+
+                    <span class="car-badge">
+                        VERIFIED
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add Mazda CX-5 to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        Mazda CX-5
+                    </h3>
+
+
+                    <p>
+                        2018 • 2.0L Petrol • Automatic
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 3.9M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CAR 4 - FORESTER
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="Subaru"
+                data-model="Forester"
+                data-price="3600000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Subaru_Forester_211312.jpg"
+                        alt="Subaru Forester"
+                        loading="lazy"
+                    >
+
+
+                    <span class="car-badge">
+                        JAPANESE IMPORT
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add Subaru Forester to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        Subaru Forester
+                    </h3>
+
+
+                    <p>
+                        2018 • 2.0L Petrol • Automatic
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 3.6M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CAR 5 - XTRAIL
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="Nissan"
+                data-model="XTrail"
+                data-price="2470000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/NISSAN_X-TRAIL.jpg"
+                        alt="Nissan X-Trail"
+                        loading="lazy"
+                    >
+
+
+                    <span class="car-badge">
+                        JAPANESE IMPORT
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add Nissan X-Trail to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        Nissan X-Trail
+                    </h3>
+
+
+                    <p>
+                        2015 • 2.0L Petrol • Automatic
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 2.47M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CAR 6 - BMW X5
+                 ================================================= -->
+
+            <article
+                class="car-card"
+                data-make="BMW"
+                data-model="X5"
+                data-price="5800000"
+                data-location="Nairobi"
+            >
+
+                <div class="car-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/BMW_X5.jpg"
+                        alt="BMW X5"
+                        loading="lazy"
+                    >
+
+
+                    <span class="car-badge">
+                        PREMIUM
+                    </span>
+
+
+                    <button
+                        class="card-favourite"
+                        type="button"
+                        aria-label="Add BMW X5 to favourites"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+
+                <div class="car-info">
+
+                    <h3>
+                        BMW X5
+                    </h3>
+
+
+                    <p>
+                        2007 • 3.0L Diesel • Automatic
+                    </p>
+
+
+                    <p>
+                        📍 Nairobi
+                    </p>
+
+
+                    <div class="car-price">
+                        KSh 5.8M
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         POPULAR BRANDS
+         ===================================================== -->
+
+    <section class="brands-section">
+
+        <h2>
+            Popular Brands
+        </h2>
+
+
+        <div class="brands">
+
+            <span>
+                TOYOTA
+            </span>
+
+            <span>
+                MAZDA
+            </span>
+
+            <span>
+                SUBARU
+            </span>
+
+            <span>
+                NISSAN
+            </span>
+
+            <span>
+                BMW
+            </span>
+
+            <span>
+                HONDA
+            </span>
+
+            <span>
+                MERCEDES
+            </span>
+
+            <span>
+                MITSUBISHI
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WHY CHIPICARSKE
+         ===================================================== -->
+
+    <section class="why-section">
+
+
+        <div class="section-title">
+
+            <span class="section-label">
+                WHY CHIPICARSKE
+            </span>
+
+
+            <h2>
+                Why Choose
+                <span>ChipicarsKE?</span>
+            </h2>
+
+
+            <p>
+                Everything you need to find your
+                next car in Kenya.
+            </p>
+
+        </div>
+
+
+
+        <div class="benefits">
+
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+                    ✓
+                </div>
+
+
+                <h3>
+                    Verified Cars
+                </h3>
+
+
+                <p>
+                    Browse quality vehicles from
+                    trusted sellers.
+                </p>
+
+            </div>
+
+
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+                    ◆
+                </div>
+
+
+                <h3>
+                    Fair Prices
+                </h3>
+
+
+                <p>
+                    Compare vehicles and discover
+                    competitive Kenyan prices.
+                </p>
+
+            </div>
+
+
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+                    ♢
+                </div>
+
+
+                <h3>
+                    Easy Comparison
+                </h3>
+
+
+                <p>
+                    Compare different vehicles
+                    before making your decision.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         COMPARE
+         ===================================================== -->
+
+    <section
+        id="compare"
+        class="Feature-selection"
+    >
+
+        <div>
+
+            <span class="section-label">
+                COMPARE
+            </span>
+
+
+            <h2>
+                Find the car
+                that's right for you.
+            </h2>
+
+
+            <p>
+                Compare prices, engines,
+                mileage, fuel type and more.
+            </p>
+
+
+            <button
+                class="primary-button"
+                type="button"
+            >
+                Compare Cars →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         GARAGE
+         ===================================================== -->
+
+    <section
+        id="garage"
+        class="garage-section"
+    >
+
+
+        <div>
+
+            <span class="section-label">
+                MY GARAGE
+            </span>
+
+
+            <h2>
+                Your cars.
+                Your shortlist.
+            </h2>
+
+
+            <p>
+                Save vehicles you love and
+                come back to them anytime.
+            </p>
+
+        </div>
+
+
+
+        <div class="garage-preview">
+
+            <span>
+                ♡
+            </span>
+
+
+            <h3>
+                Your Garage
+            </h3>
+
+
+            <p>
+                No saved cars yet.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SELL
+         ===================================================== -->
+
+    <section
+        id="sell"
+        class="sell-section"
+    >
+
+
+        <div>
+
+            <span class="section-label">
+                SELL YOUR CAR
+            </span>
+
+
+            <h2>
+                Ready to sell?
+            </h2>
+
+
+            <p>
+                List your vehicle and reach
+                buyers across Kenya.
+            </p>
+
+
+            <button
+                class="primary-button"
+                type="button"
+            >
+                List Your Car
+            </button>
+
+        </div>
+
+    </section>
+       <!-- =====================================================
+         CONTACT
+         ===================================================== -->
+    <section
+        id="contact"
+        class="contact-section"
+    >
+    
+        <div>
+
+            <span class="section-label">
+                CONTACT US
+            </span>
+    <p>
+        Have questions or need assistance? Reach out to our support team for help with buying, selling, or any inquiries you may have.
+        Reach us at <a href="mailto://support@chipicarske.com">support@chipicarske.com</a>
+        whatsapp us on <a href="https://wa.me/254700000000">+254 700 000 000</a> or call us at <a href="tel:+254700000000">+254 700 000 000</a>.
+    </p>
+    <section class="contact-section">
+
+    <div class="contact-container">
+
+        <div class="contact-info">
+
+            <span class="section-label">
+                CONTACT US
+            </span>
+
+            <h2>Let's Talk Cars.</h2>
+
+            <p>
+                Have a question about a vehicle,
+                want to sell your car, or need help
+                finding your next drive?
+            </p>
+
+            <div class="contact-details">
+
+                <div class="contact-detail">
+                    <div class="contact-icon">📍</div>
+
+                    <div>
+                        <h4>Visit Us</h4>
+                        <p>Nairobi, Kenya</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-icon">☎</div>
+
+                    <div>
+                        <h4>Call Us</h4>
+                        <p>+254 700 000 000</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-icon">✉</div>
+
+                    <div>
+                        <h4>Email Us</h4>
+                        <p>info@chipicarske.com</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-form">
+
+            <h2>Send Us a Message</h2>
+
+            <p>
+                We'll get back to you as soon as possible.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <select id="subject">
+
+                        <option value="">
+                            Select a subject
+                        </option>
+
+                        <option value="buying">
+                            Buying a car
+                        </option>
+
+                        <option value="selling">
+                            Selling my car
+                        </option>
+
+                        <option value="listing">
+                            Question about a listing
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        placeholder="How can we help you?"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+                    Send Message
+                </button>
+
+
+                <div
+                    id="contactMessage"
+                    class="contact-message"
+                >
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <p>
+        © 2026 ChipicarsKE.
+        Built for the Kenyan automotive market.
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
