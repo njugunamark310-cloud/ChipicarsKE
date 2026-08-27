@@ -2044,3 +2044,416 @@ window.showNotification =
 console.log(
     "🚘 ChipicarsKE is ready."
 );
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        renderGaragePage();
+
+        initializeGarageActions();
+
+    }
+);
+
+
+/* =====================================================
+   RENDER GARAGE
+   ===================================================== */
+
+function renderGaragePage() {
+
+    const garageGrid =
+        document.getElementById(
+            "garageGrid"
+        );
+
+    const emptyGarage =
+        document.getElementById(
+            "garageEmpty"
+        );
+
+    const subtitle =
+        document.getElementById(
+            "garageSubtitle"
+        );
+
+
+    if (!garageGrid) return;
+
+
+    const favourites =
+        getStorage(
+            CHIPICARSKE.storage.favourites
+        );
+
+
+    garageGrid.innerHTML = "";
+
+
+    if (
+        favourites.length === 0
+    ) {
+
+        emptyGarage.style.display =
+            "flex";
+
+        subtitle.textContent =
+            "You haven't saved any vehicles yet.";
+
+        return;
+
+    }
+
+
+    emptyGarage.style.display =
+        "none";
+
+
+    subtitle.textContent =
+        `${favourites.length} vehicle${favourites.length === 1 ? "" : "s"} saved in your garage.`;
+
+
+    favourites.forEach(
+        function (vehicle) {
+
+            const card =
+                createGarageCard(
+                    vehicle
+                );
+
+
+            garageGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CREATE GARAGE CARD
+   ===================================================== */
+
+function createGarageCard(
+    vehicle
+) {
+
+    const card =
+        document.createElement(
+            "article"
+        );
+
+
+    card.className =
+        "garage-car-card";
+
+
+    card.innerHTML = `
+
+        <div class="garage-car-image">
+
+            <img
+                src="${escapeHTML(vehicle.image)}"
+                alt="${escapeHTML(vehicle.name)}"
+                loading="lazy"
+            >
+
+            <button
+                type="button"
+                class="garage-remove-button"
+                aria-label="Remove ${escapeHTML(vehicle.name)}"
+            >
+                ♥
+            </button>
+
+        </div>
+
+
+        <div class="garage-car-info">
+
+            <span class="garage-location">
+                📍 ${escapeHTML(vehicle.location)}
+            </span>
+
+            <h3>
+                ${escapeHTML(vehicle.name)}
+            </h3>
+
+            <p class="garage-specs">
+
+                ${escapeHTML(vehicle.year || "Year N/A")}
+
+                ${vehicle.engine
+                    ? ` • ${escapeHTML(vehicle.engine)}`
+                    : ""
+                }
+
+                ${vehicle.fuel
+                    ? ` • ${escapeHTML(vehicle.fuel)}`
+                    : ""
+                }
+
+                ${vehicle.transmission
+                    ? ` • ${escapeHTML(vehicle.transmission)}`
+                    : ""
+                }
+
+            </p>
+
+
+            <div class="garage-card-bottom">
+
+                <strong>
+                    ${formatPrice(vehicle.price)}
+                </strong>
+
+                <button
+                    type="button"
+                    class="garage-compare-button"
+                >
+                    ⇄ Compare
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* =================================================
+       REMOVE BUTTON
+       ================================================= */
+
+    const removeButton =
+        card.querySelector(
+            ".garage-remove-button"
+        );
+
+
+    removeButton.addEventListener(
+        "click",
+        function () {
+
+            removeFavouriteFromGarage(
+                vehicle.id
+            );
+
+        }
+    );
+
+
+    /* =================================================
+       COMPARE BUTTON
+       ================================================= */
+
+    const compareButton =
+        card.querySelector(
+            ".garage-compare-button"
+        );
+
+
+    compareButton.addEventListener(
+        "click",
+        function () {
+
+            addToComparison(
+                vehicle
+            );
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+/* =====================================================
+   REMOVE FAVOURITE
+   ===================================================== */
+
+function removeFavouriteFromGarage(
+    vehicleId
+) {
+
+    let favourites =
+        getStorage(
+            CHIPICARSKE.storage.favourites
+        );
+
+
+    const vehicle =
+        favourites.find(
+            function (item) {
+
+                return (
+                    item.id ===
+                    vehicleId
+                );
+
+            }
+        );
+
+
+    favourites =
+        favourites.filter(
+            function (item) {
+
+                return (
+                    item.id !==
+                    vehicleId
+                );
+
+            }
+        );
+
+
+    saveStorage(
+        CHIPICARSKE.storage.favourites,
+        favourites
+    );
+
+
+    updateFavouriteCount();
+
+
+    renderGaragePage();
+
+
+    showNotification(
+        vehicle
+            ? `${vehicle.name} removed from your garage.`
+            : "Vehicle removed from your garage.",
+        "info"
+    );
+
+}
+
+
+/* =====================================================
+   CLEAR GARAGE
+   ===================================================== */
+
+function initializeGarageActions() {
+
+    const clearButton =
+        document.getElementById(
+            "clearGarageButton"
+        );
+
+
+    if (!clearButton) return;
+
+
+    clearButton.addEventListener(
+        "click",
+        function () {
+
+            const favourites =
+                getStorage(
+                    CHIPICARSKE.storage.favourites
+                );
+
+
+            if (
+                favourites.length === 0
+            ) {
+
+                showNotification(
+                    "Your garage is already empty.",
+                    "info"
+                );
+
+                return;
+
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to remove all saved vehicles?"
+                );
+
+
+            if (!confirmed) return;
+
+
+            saveStorage(
+                CHIPICARSKE.storage.favourites,
+                []
+            );
+
+
+            updateFavouriteCount();
+
+
+            renderGaragePage();
+
+
+            showNotification(
+                "Your garage has been cleared.",
+                "success"
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   PRICE FORMATTER
+   ===================================================== */
+
+function formatPrice(
+    price
+) {
+
+    const amount =
+        Number(price) || 0;
+
+
+    if (
+        amount >= 1000000
+    ) {
+
+        return (
+            "KSh " +
+            (amount / 1000000)
+                .toFixed(1)
+                .replace(
+                    ".0",
+                    ""
+                ) +
+            "M"
+        );
+
+    }
+
+
+    if (
+        amount >= 1000
+    ) {
+
+        return (
+            "KSh " +
+            Math.round(
+                amount / 1000
+            ) +
+            "K"
+        );
+
+    }
+
+
+    return (
+        "KSh " +
+        amount.toLocaleString()
+    );
+
+}
