@@ -1,14 +1,764 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChipicarsKE | Find Your Next Drive</title>
 
-    <link rel="stylesheet" href="styles.css">
-    
+
+<meta
+    name="description"
+    content="ChipicarsKE marketplace - Browse cars and motorcycles across Kenya."
+>
+
+<title>ChipicarsKE | Browse Vehicles</title>
+
+<link rel="stylesheet" href="styles.css">
+
+
 </head>
+
 <body>
+
+
+<!--NAVIGATION -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <h2>Chipicars<span>KE</span></h2>
+        <p>Find Your Next Drive</p>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
     
+
+    </nav>
+
+    <div class="nav-buttons">
+
+        <button class="favourite-button" type="button">
+            ♡
+            <span id="favoriteCount">0</span>
+        </button>
+
+        <button class="sell-button" type="button">
+            Sell Your Vehicle
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="marketplace-hero">
+
+        <div class="marketplace-hero-content">
+
+            <span class="section-label">
+                CHIPICARSKE MARKETPLACE
+            </span>
+
+            <h1>
+                Find Your
+                <span>Next Vehicle</span>
+            </h1>
+
+            <p>
+                Browse quality cars, SUVs, vans and
+                motorcycles from sellers across Kenya.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH-->
+
+    <section class="vehicle-search">
+
+        <div class="search-heading">
+
+            <h2>Search Vehicles</h2>
+
+            <p>
+                Find the right vehicle using our filters.
+            </p>
+
+        </div>
+
+
+        <div class="vehicle-filters">
+
+            <div class="filter-group">
+
+                <label for="vehicleType">
+                    Vehicle Type
+                </label>
+
+                <select id="vehicleType">
+
+                    <option value="">
+                        All Vehicles
+                    </option>
+
+                    <option value="car">
+                        Cars
+                    </option>
+
+                    <option value="motorcycle">
+                        Motorcycles
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="vehicleMake">
+                    Make
+                </label>
+
+                <select id="vehicleMake">
+
+                    <option value="">
+                        Any Make
+                    </option>
+
+                    <option value="Toyota">Toyota</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Honda">Honda</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Yamaha">Yamaha</option>
+                    <option value="Suzuki">Suzuki</option>
+                    <option value="Kawasaki">Kawasaki</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="vehiclePrice">
+                    Price
+                </label>
+
+                <select id="vehiclePrice">
+
+                    <option value="">
+                        Any Price
+                    </option>
+
+                    <option value="500000">
+                        Under KSh 500K
+                    </option>
+
+                    <option value="1000000">
+                        Under KSh 1M
+                    </option>
+
+                    <option value="3000000">
+                        Under KSh 3M
+                    </option>
+
+                    <option value="5000000">
+                        Under KSh 5M
+                    </option>
+
+                    <option value="10000000">
+                        Under KSh 10M
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="vehicleLocation">
+                    Location
+                </label>
+
+                <select id="vehicleLocation">
+
+                    <option value="">
+                        Anywhere
+                    </option>
+
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Eldoret">Eldoret</option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                id="vehicleSearchButton"
+                class="search-button"
+                type="button"
+            >
+                🔍 Search
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!--VEHICLE RESULTS-->
+
+    <section class="vehicle-results" id="cars">
+
+        <div class="results-header">
+
+            <div>
+
+                <span class="section-label">
+                    MARKETPLACE
+                </span>
+
+                <h2>Available Vehicles</h2>
+
+            </div>
+
+
+            <div class="sort-container">
+
+                <label for="sortVehicles">
+                    Sort by
+                </label>
+
+                <select id="sortVehicles">
+
+                    <option value="featured">
+                        Featured
+                    </option>
+
+                    <option value="low">
+                        Price: Low to High
+                    </option>
+
+                    <option value="high">
+                        Price: High to Low
+                    </option>
+
+                    <option value="newest">
+                        Newest
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!--VEHICLE GRID-->
+
+        <div class="vehicle-grid" id="vehicleGrid">
+
+
+            <!-- CAR 1 -->
+
+            <article
+                class="vehicle-card"
+                data-type="car"
+                data-make="Toyota"
+                data-price="3600000"
+                data-location="Nairobi"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://img.autoabc.lv/Toyota-Land-Cruiser/Toyota-Land-Cruiser_2013_Apvidus_21223110110.jpg"
+                        alt="Toyota Land Cruiser Prado"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        JDM IMPORT
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        SUV
+                    </span>
+
+                    <h3>
+                        Toyota Land Cruiser Prado
+                    </h3>
+
+                    <p>
+                        2013 • 82,000 km • Petrol
+                    </p>
+
+                    <p>
+                        Automatic • Nairobi
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 3.6M
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- CAR 2 -->
+
+            <article
+                class="vehicle-card"
+                data-type="car"
+                data-make="Toyota"
+                data-price="3800000"
+                data-location="Nairobi"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS43s0DIGNVrXSaSUe3KpkZXf2SwOFKNnb6QPCeA8YCcw&s=10"
+                        alt="Toyota Harrier"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        JAPANESE IMPORT
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        SUV
+                    </span>
+
+                    <h3>
+                        Toyota Harrier
+                    </h3>
+
+                    <p>
+                        2018 • 72,000 km • Petrol
+                    </p>
+
+                    <p>
+                        CVT • Nairobi
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 3.8M
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- CAR 3 -->
+
+            <article
+                class="vehicle-card"
+                data-type="car"
+                data-make="Mazda"
+                data-price="3300000"
+                data-location="Mombasa"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlz3JcdHc8IqehMk26Z7JNrMXHJWnwnO_msO0z9E98vFDRDiN-aJeyqRbu&s=10"
+                        alt="Mazda CX-5"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        VERIFIED
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        SUV
+                    </span>
+
+                    <h3>
+                        Mazda CX-5
+                    </h3>
+
+                    <p>
+                        2018 • 65,000 km • Petrol
+                    </p>
+
+                    <p>
+                        Automatic • Mombasa
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 3.3M
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- CAR 4 -->
+
+            <article
+                class="vehicle-card"
+                data-type="car"
+                data-make="Subaru"
+                data-price="3600000"
+                data-location="Nairobi"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfX2TRh8_w0-ZKxwnjXu2Nzz-LE2DVPD5MaTvUJ54tGA&s=10"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        JDM IMPORT
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        SUV
+                    </span>
+
+                    <h3>
+                        Subaru Forester
+                    </h3>
+
+                    <p>
+                        2018 • 70,000 km • Petrol
+                    </p>
+
+                    <p>
+                        Automatic • Nairobi
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 3.6M
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- MOTORCYCLE 1 -->
+
+            <article
+                class="vehicle-card"
+                data-type="motorcycle"
+                data-make="Yamaha"
+                data-price="850000"
+                data-location="Nairobi"
+                id="motorcycles"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Yamaha_MT-07.jpg"
+                        alt="Yamaha MT-07 motorcycle"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        MOTORCYCLE
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        MOTORCYCLE
+                    </span>
+
+                    <h3>
+                        Yamaha MT-07
+                    </h3>
+
+                    <p>
+                        2021 • 689cc • Petrol
+                    </p>
+
+                    <p>
+                        Manual • Nairobi
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 850K
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- MOTORCYCLE 2 -->
+
+            <article
+                class="vehicle-card"
+                data-type="motorcycle"
+                data-make="Honda"
+                data-price="420000"
+                data-location="Nakuru"
+            >
+
+                <div class="vehicle-image">
+
+                    <img
+                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Honda_CRF250L.jpg"
+                        alt="Honda CRF250L motorcycle"
+                        loading="lazy"
+                    >
+
+                    <span class="vehicle-badge">
+                        MOTORCYCLE
+                    </span>
+
+                    <button
+                        class="vehicle-favourite"
+                        type="button"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <div class="vehicle-info">
+
+                    <span class="vehicle-type">
+                        MOTORCYCLE
+                    </span>
+
+                    <h3>
+                        Honda CRF250L
+                    </h3>
+
+                    <p>
+                        2020 • 250cc • Petrol
+                    </p>
+
+                    <p>
+                        Manual • Nakuru
+                    </p>
+
+                    <div class="vehicle-bottom">
+
+                        <strong>
+                            KSh 420K
+                        </strong>
+
+                        <button
+                            class="details-button"
+                            type="button"
+                        >
+                            View Details
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!--CALL TO ACTION -->
+
+    <section class="marketplace-cta">
+
+        <div>
+
+            <span class="section-label">
+                SELL WITH CHIPICARSKE
+            </span>
+
+            <h2>
+                Have a vehicle to sell?
+            </h2>
+
+            <p>
+                Reach buyers across Kenya by
+                listing your car or motorcycle.
+            </p>
+
+            <button
+                class="primary-button"
+                type="button"
+            >
+                List Your Vehicle
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!--FOOTER -->
+
+<footer>
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+    <p>
+        © 2026 ChipicarsKE.
+        Built for the Kenyan automotive market.
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
 </body>
+
 </html>
