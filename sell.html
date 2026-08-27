@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sell your car on ChipicarsKE and reach buyers across Kenya."
+    >
+
+    <title>Sell Your Car | ChipicarsKE</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <nav aria-label="Main navigation">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="cars.html">
+            More Rides
+        </a>
+
+        <a href="compare.html">
+            Compare
+        </a>
+
+        <a href="garage.html">
+            Garage
+        </a>
+
+        <a
+            href="sell.html"
+            class="active"
+        >
+            Sell
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <button
+            class="favourite-button"
+            type="button"
+            onclick="window.location.href='garage.html'"
+        >
+            ♥
+            <span id="favoriteCount">0</span>
+        </button>
+
+
+        <button
+            class="sell-button"
+            type="button"
+            onclick="window.location.href='sell.html'"
+        >
+            Sell My Car
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     SELL HERO
+     ===================================================== -->
+
+<main>
+
+<section class="sell-hero">
+
+    <div class="sell-hero-content">
+
+        <span class="section-label">
+            SELL WITH CHIPICARSKE
+        </span>
+
+        <h1>
+            Turn Your Car
+            <span>Into a Great Deal.</span>
+        </h1>
+
+        <p>
+            List your vehicle on ChipicarsKE and
+            connect with buyers looking for their
+            next drive across Kenya.
+        </p>
+
+
+        <div class="sell-hero-points">
+
+            <div>
+                <span>✓</span>
+                Reach buyers across Kenya
+            </div>
+
+            <div>
+                <span>✓</span>
+                Create your listing in minutes
+            </div>
+
+            <div>
+                <span>✓</span>
+                Showcase your car professionally
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="sell-hero-card">
+
+        <div class="sell-hero-card-icon">
+            🚗
+        </div>
+
+        <h3>
+            Ready to sell?
+        </h3>
+
+        <p>
+            Complete the form below to create
+            your vehicle listing.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SELL FORM
+     ===================================================== -->
+
+<section class="sell-page">
+
+    <div class="sell-form-wrapper">
+
+
+        <!-- =============================================
+             FORM HEADER
+             ============================================= -->
+
+        <div class="sell-form-header">
+
+            <span class="section-label">
+                VEHICLE DETAILS
+            </span>
+
+            <h2>
+                Create Your Listing
+            </h2>
+
+            <p>
+                Give buyers the information they need
+                to understand your vehicle.
+            </p>
+
+        </div>
+
+
+
+        <form id="sellCarForm">
+
+
+            <!-- =========================================
+                 BASIC INFORMATION
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    01. Basic Information
+                </h3>
+
+                <p class="form-section-description">
+                    Tell us about the vehicle you're selling.
+                </p>
+
+
+                <div class="sell-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="sellMake">
+                            Make
+                        </label>
+
+                        <select
+                            id="sellMake"
+                            required
+                        >
+
+                            <option value="">
+                                Select make
+                            </option>
+
+                            <option value="Toyota">
+                                Toyota
+                            </option>
+
+                            <option value="Mazda">
+                                Mazda
+                            </option>
+
+                            <option value="Subaru">
+                                Subaru
+                            </option>
+
+                            <option value="Nissan">
+                                Nissan
+                            </option>
+
+                            <option value="Honda">
+                                Honda
+                            </option>
+
+                            <option value="BMW">
+                                BMW
+                            </option>
+
+                            <option value="Mercedes-Benz">
+                                Mercedes-Benz
+                            </option>
+
+                            <option value="Land Rover">
+                                Land Rover
+                            </option>
+
+                            <option value="Mitsubishi">
+                                Mitsubishi
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellModel">
+                            Model
+                        </label>
+
+                        <input
+                            type="text"
+                            id="sellModel"
+                            placeholder="e.g. Land Cruiser Prado"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellYear">
+                            Year
+                        </label>
+
+                        <select
+                            id="sellYear"
+                            required
+                        >
+
+                            <option value="">
+                                Select year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellMileage">
+                            Mileage (KM)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="sellMileage"
+                            min="0"
+                            placeholder="e.g. 85000"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 ENGINE & VEHICLE DETAILS
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    02. Vehicle Specifications
+                </h3>
+
+                <p class="form-section-description">
+                    Add the technical details of your vehicle.
+                </p>
+
+
+                <div class="sell-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="sellEngine">
+                            Engine
+                        </label>
+
+                        <input
+                            type="text"
+                            id="sellEngine"
+                            placeholder="e.g. 3.0L"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellFuel">
+                            Fuel Type
+                        </label>
+
+                        <select
+                            id="sellFuel"
+                            required
+                        >
+
+                            <option value="">
+                                Select fuel type
+                            </option>
+
+                            <option value="Petrol">
+                                Petrol
+                            </option>
+
+                            <option value="Diesel">
+                                Diesel
+                            </option>
+
+                            <option value="Hybrid">
+                                Hybrid
+                            </option>
+
+                            <option value="Electric">
+                                Electric
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellTransmission">
+                            Transmission
+                        </label>
+
+                        <select
+                            id="sellTransmission"
+                            required
+                        >
+
+                            <option value="">
+                                Select transmission
+                            </option>
+
+                            <option value="Automatic">
+                                Automatic
+                            </option>
+
+                            <option value="Manual">
+                                Manual
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellDrive">
+                            Drive Type
+                        </label>
+
+                        <select
+                            id="sellDrive"
+                            required
+                        >
+
+                            <option value="">
+                                Select drive type
+                            </option>
+
+                            <option value="2WD">
+                                2WD
+                            </option>
+
+                            <option value="4WD">
+                                4WD
+                            </option>
+
+                            <option value="AWD">
+                                AWD
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PRICE & LOCATION
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    03. Price & Location
+                </h3>
+
+                <p class="form-section-description">
+                    Help buyers know where the vehicle is
+                    and how much you're asking.
+                </p>
+
+
+                <div class="sell-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="sellPrice">
+                            Asking Price (KSh)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="sellPrice"
+                            min="0"
+                            placeholder="e.g. 4600000"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellLocation">
+                            Location
+                        </label>
+
+                        <select
+                            id="sellLocation"
+                            required
+                        >
+
+                            <option value="">
+                                Select location
+                            </option>
+
+                            <option value="Nairobi">
+                                Nairobi
+                            </option>
+
+                            <option value="Mombasa">
+                                Mombasa
+                            </option>
+
+                            <option value="Nakuru">
+                                Nakuru
+                            </option>
+
+                            <option value="Kisumu">
+                                Kisumu
+                            </option>
+
+                            <option value="Eldoret">
+                                Eldoret
+                            </option>
+
+                            <option value="Thika">
+                                Thika
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 DESCRIPTION
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    04. Description
+                </h3>
+
+                <p class="form-section-description">
+                    Give potential buyers a detailed description
+                    of your vehicle.
+                </p>
+
+
+                <div class="form-group">
+
+                    <label for="sellDescription">
+                        Vehicle Description
+                    </label>
+
+                    <textarea
+                        id="sellDescription"
+                        rows="6"
+                        placeholder="Tell buyers about the condition, service history, features and anything else they should know..."
+                        required
+                    ></textarea>
+
+                    <small>
+                        Be honest and detailed. Good descriptions
+                        help buyers make better decisions.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 IMAGE
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    05. Vehicle Photo
+                </h3>
+
+                <p class="form-section-description">
+                    Add a photo that best represents your vehicle.
+                </p>
+
+
+                <div class="form-group">
+
+                    <label for="sellImage">
+                        Vehicle Image URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="sellImage"
+                        placeholder="https://example.com/my-car.jpg"
+                    >
+
+                    <small>
+                        For this project version, enter the URL
+                        of your vehicle image.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 SELLER DETAILS
+                 ========================================= -->
+
+            <div class="sell-form-section">
+
+                <h3>
+                    06. Seller Information
+                </h3>
+
+                <p class="form-section-description">
+                    Give interested buyers a way to contact you.
+                </p>
+
+
+                <div class="sell-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="sellerName">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="sellerName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellerPhone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="sellerPhone"
+                            placeholder="+254 700 000 000"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="sellerEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="sellerEmail"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 AGREEMENT
+                 ========================================= -->
+
+            <div class="sell-agreement">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="sellerAgreement"
+                        required
+                    >
+
+                    <span>
+                        I confirm that the information provided
+                        about this vehicle is accurate and I am
+                        authorized to list this vehicle.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 SUBMIT
+                 ========================================= -->
+
+            <div class="sell-submit-area">
+
+                <button
+                    type="submit"
+                    class="primary-button sell-submit-button"
+                >
+                    Publish My Listing →
+                </button>
+
+                <p>
+                    Your listing will be saved locally for
+                    this project demonstration.
+                </p>
+
+            </div>
+
+
+            <div
+                id="sellMessage"
+                class="sell-message"
+            ></div>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =================================================
+         LISTING PREVIEW
+         ================================================= -->
+
+    <aside
+        class="listing-preview"
+        id="listingPreview"
+    >
+
+        <span class="section-label">
+            LIVE PREVIEW
+        </span>
+
+        <h2>
+            Your Listing
+        </h2>
+
+        <div class="preview-card">
+
+            <div class="preview-image">
+
+                <img
+                    id="previewImage"
+                    src=""
+                    alt="Vehicle preview"
+                >
+
+                <span>
+                    YOUR LISTING
+                </span>
+
+            </div>
+
+
+            <div class="preview-info">
+
+                <p
+                    class="preview-location"
+                    id="previewLocation"
+                >
+                    📍 Location
+                </p>
+
+                <h3 id="previewName">
+                    Your Vehicle
+                </h3>
+
+                <p id="previewSpecs">
+                    Year • Engine • Fuel • Transmission
+                </p>
+
+                <strong id="previewPrice">
+                    KSh 0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="preview-note">
+
+            <strong>
+                💡 Selling tip
+            </strong>
+
+            <p>
+                Clear photos, accurate details and
+                a realistic price can make your listing
+                more attractive to buyers.
+            </p>
+
+        </div>
+
+    </aside>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS
+     ===================================================== -->
+
+<section class="sell-how">
+
+    <div class="section-title">
+
+        <span class="section-label">
+            SIMPLE PROCESS
+        </span>
+
+        <h2>
+            Selling Made Easy
+        </h2>
+
+        <p>
+            Get your vehicle in front of potential
+            buyers in three simple steps.
+        </p>
+
+    </div>
+
+
+    <div class="sell-steps">
+
+
+        <article>
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                Create Your Listing
+            </h3>
+
+            <p>
+                Enter your vehicle details,
+                price, location and description.
+            </p>
+
+        </article>
+
+
+
+        <article>
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                Reach Buyers
+            </h3>
+
+            <p>
+                Your vehicle can be discovered by
+                buyers searching for their next car.
+            </p>
+
+        </article>
+
+
+
+        <article>
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                Close The Deal
+            </h3>
+
+            <p>
+                Connect with interested buyers
+                and agree on the final transaction.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <p>
+        © 2026 ChipicarsKE.
+        Built for the Kenyan automotive market.
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>
