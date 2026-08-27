@@ -2457,3 +2457,477 @@ function formatPrice(
     );
 
 }
+ /*=====================================================
+     SELL PAGE JAVASCRIPT
+     ===================================================== */
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        populateYears();
+
+        setupSellPreview();
+
+        setupSellForm();
+
+    }
+);
+
+
+/* =====================================================
+   YEAR DROPDOWN
+   ===================================================== */
+
+function populateYears() {
+
+    const yearSelect =
+        document.getElementById(
+            "sellYear"
+        );
+
+    const currentYear =
+        new Date().getFullYear();
+
+
+    for (
+        let year = currentYear;
+        year >= 1990;
+        year--
+    ) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value = year;
+
+        option.textContent = year;
+
+        yearSelect.appendChild(
+            option
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LIVE LISTING PREVIEW
+   ===================================================== */
+
+function setupSellPreview() {
+
+    const fields = {
+
+        make:
+            document.getElementById(
+                "sellMake"
+            ),
+
+        model:
+            document.getElementById(
+                "sellModel"
+            ),
+
+        year:
+            document.getElementById(
+                "sellYear"
+            ),
+
+        engine:
+            document.getElementById(
+                "sellEngine"
+            ),
+
+        fuel:
+            document.getElementById(
+                "sellFuel"
+            ),
+
+        transmission:
+            document.getElementById(
+                "sellTransmission"
+            ),
+
+        location:
+            document.getElementById(
+                "sellLocation"
+            ),
+
+        price:
+            document.getElementById(
+                "sellPrice"
+            ),
+
+        image:
+            document.getElementById(
+                "sellImage"
+            )
+
+    };
+
+
+    Object.values(fields).forEach(
+        function (field) {
+
+            field.addEventListener(
+                "input",
+                updatePreview
+            );
+
+            field.addEventListener(
+                "change",
+                updatePreview
+            );
+
+        }
+    );
+
+
+    updatePreview();
+
+}
+
+
+/* =====================================================
+   UPDATE PREVIEW
+   ===================================================== */
+
+function updatePreview() {
+
+    const make =
+        document.getElementById(
+            "sellMake"
+        ).value;
+
+    const model =
+        document.getElementById(
+            "sellModel"
+        ).value;
+
+    const year =
+        document.getElementById(
+            "sellYear"
+        ).value;
+
+    const engine =
+        document.getElementById(
+            "sellEngine"
+        ).value;
+
+    const fuel =
+        document.getElementById(
+            "sellFuel"
+        ).value;
+
+    const transmission =
+        document.getElementById(
+            "sellTransmission"
+        ).value;
+
+    const location =
+        document.getElementById(
+            "sellLocation"
+        ).value;
+
+    const price =
+        document.getElementById(
+            "sellPrice"
+        ).value;
+
+    const image =
+        document.getElementById(
+            "sellImage"
+        ).value;
+
+
+    const previewName =
+        document.getElementById(
+            "previewName"
+        );
+
+    const previewSpecs =
+        document.getElementById(
+            "previewSpecs"
+        );
+
+    const previewLocation =
+        document.getElementById(
+            "previewLocation"
+        );
+
+    const previewPrice =
+        document.getElementById(
+            "previewPrice"
+        );
+
+    const previewImage =
+        document.getElementById(
+            "previewImage"
+        );
+
+
+    previewName.textContent =
+        make && model
+            ? `${make} ${model}`
+            : "Your Vehicle";
+
+
+    previewSpecs.textContent =
+        [
+            year,
+            engine,
+            fuel,
+            transmission
+        ]
+        .filter(Boolean)
+        .join(" • ")
+        ||
+        "Year • Engine • Fuel • Transmission";
+
+
+    previewLocation.textContent =
+        location
+            ? `📍 ${location}`
+            : "📍 Location";
+
+
+    previewPrice.textContent =
+        price
+            ? formatSellPrice(price)
+            : "KSh 0";
+
+
+    if (image) {
+
+        previewImage.src =
+            image;
+
+    } else {
+
+        previewImage.removeAttribute(
+            "src"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   PRICE FORMAT
+   ===================================================== */
+
+function formatSellPrice(
+    value
+) {
+
+    const number =
+        Number(value);
+
+
+    if (
+        number >= 1000000
+    ) {
+
+        return (
+            "KSh " +
+            (number / 1000000)
+                .toFixed(1)
+                .replace(
+                    ".0",
+                    ""
+                ) +
+            "M"
+        );
+
+    }
+
+
+    return (
+        "KSh " +
+        number.toLocaleString()
+    );
+
+}
+
+
+/* =====================================================
+   FORM SUBMISSION
+   ===================================================== */
+
+function setupSellForm() {
+
+    const form =
+        document.getElementById(
+            "sellCarForm"
+        );
+
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const listing = {
+
+                id:
+                    "listing-" +
+                    Date.now(),
+
+                make:
+                    document.getElementById(
+                        "sellMake"
+                    ).value,
+
+                model:
+                    document.getElementById(
+                        "sellModel"
+                    ).value,
+
+                year:
+                    document.getElementById(
+                        "sellYear"
+                    ).value,
+
+                mileage:
+                    document.getElementById(
+                        "sellMileage"
+                    ).value,
+
+                engine:
+                    document.getElementById(
+                        "sellEngine"
+                    ).value,
+
+                fuel:
+                    document.getElementById(
+                        "sellFuel"
+                    ).value,
+
+                transmission:
+                    document.getElementById(
+                        "sellTransmission"
+                    ).value,
+
+                drive:
+                    document.getElementById(
+                        "sellDrive"
+                    ).value,
+
+                price:
+                    document.getElementById(
+                        "sellPrice"
+                    ).value,
+
+                location:
+                    document.getElementById(
+                        "sellLocation"
+                    ).value,
+
+                description:
+                    document.getElementById(
+                        "sellDescription"
+                    ).value,
+
+                image:
+                    document.getElementById(
+                        "sellImage"
+                    ).value,
+
+                seller:
+                    {
+                        name:
+                            document.getElementById(
+                                "sellerName"
+                            ).value,
+
+                        phone:
+                            document.getElementById(
+                                "sellerPhone"
+                            ).value,
+
+                        email:
+                            document.getElementById(
+                                "sellerEmail"
+                            ).value
+                    },
+
+                createdAt:
+                    new Date().toISOString()
+
+            };
+
+
+            saveListing(
+                listing
+            );
+
+
+            const message =
+                document.getElementById(
+                    "sellMessage"
+                );
+
+
+            message.className =
+                "sell-message success";
+
+
+            message.textContent =
+                "✓ Your vehicle listing has been created successfully!";
+
+
+            form.reset();
+
+
+            updatePreview();
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SAVE LISTING
+   ===================================================== */
+
+function saveListing(
+    listing
+) {
+
+    const listings =
+        JSON.parse(
+            localStorage.getItem(
+                "chipicarskeListings"
+            )
+        ) || [];
+
+
+    listings.push(
+        listing
+    );
+
+
+    localStorage.setItem(
+        "chipicarskeListings",
+        JSON.stringify(
+            listings
+        )
+    );
+
+}
+
