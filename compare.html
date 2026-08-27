@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compare vehicles side by side on ChipicarsKE."
+    >
+
+    <title>
+        ChipicarsKE | Compare Vehicles
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <nav aria-label="Main navigation">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="cars.html">
+            Browse Cars
+        </a>
+
+        <a href="compare.html">
+            Compare
+        </a>
+
+        <a href="garage.html">
+            Garage
+        </a>
+
+        <a href="sell.html">
+            Sell
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <button
+            class="favourite-button"
+            type="button"
+            onclick="window.location.href='garage.html'"
+            aria-label="View favourite cars"
+        >
+
+            ♡
+
+            <span id="favoriteCount">
+                0
+            </span>
+
+        </button>
+
+
+        <button
+            class="sell-button"
+            type="button"
+            onclick="window.location.href='sell.html'"
+        >
+            Sell Your Vehicle
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         HERO
+         ================================================= -->
+
+    <section class="marketplace-hero">
+
+        <div class="marketplace-hero-content">
+
+            <span class="section-label">
+                CHIPICARSKE COMPARISON
+            </span>
+
+            <h1>
+
+                Compare Your
+
+                <span>Vehicles</span>
+
+            </h1>
+
+            <p>
+
+                Compare prices, specifications and
+                features to find the vehicle that
+                fits you best.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         COMPARISON SECTION
+         ================================================= -->
+
+    <section class="comparison-section">
+
+        <div class="results-header">
+
+            <div>
+
+                <span class="section-label">
+                    VEHICLE COMPARISON
+                </span>
+
+                <h2>
+                    Compare Vehicles
+                </h2>
+
+                <p>
+                    Select vehicles from the marketplace
+                    to compare them side by side.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             VEHICLE SELECTION
+             ============================================= -->
+
+        <div
+            class="comparison-selectors"
+            id="comparisonSelectors"
+        >
+
+
+            <!-- VEHICLE SLOT 1 -->
+
+            <div
+                class="comparison-slot"
+                data-slot="0"
+            >
+
+                <div class="comparison-slot-icon">
+                    +
+                </div>
+
+                <h3>
+                    Add Vehicle
+                </h3>
+
+                <p>
+                    Choose a vehicle to compare.
+                </p>
+
+                <a
+                    href="cars.html"
+                    class="outline-button"
+                >
+                    Browse Cars
+                </a>
+
+            </div>
+
+
+
+            <!-- VEHICLE SLOT 2 -->
+
+            <div
+                class="comparison-slot"
+                data-slot="1"
+            >
+
+                <div class="comparison-slot-icon">
+                    +
+                </div>
+
+                <h3>
+                    Add Vehicle
+                </h3>
+
+                <p>
+                    Choose a vehicle to compare.
+                </p>
+
+                <a
+                    href="cars.html"
+                    class="outline-button"
+                >
+                    Browse Cars
+                </a>
+
+            </div>
+
+
+
+            <!-- VEHICLE SLOT 3 -->
+
+            <div
+                class="comparison-slot"
+                data-slot="2"
+            >
+
+                <div class="comparison-slot-icon">
+                    +
+                </div>
+
+                <h3>
+                    Add Vehicle
+                </h3>
+
+                <p>
+                    Choose a vehicle to compare.
+                </p>
+
+                <a
+                    href="cars.html"
+                    class="outline-button"
+                >
+                    Browse Cars
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             COMPARISON TABLE
+             ============================================= -->
+
+        <div
+            class="comparison-table-wrapper"
+            id="comparisonTableWrapper"
+        >
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Specification
+                        </th>
+
+                        <th>
+                            Vehicle 1
+                        </th>
+
+                        <th>
+                            Vehicle 2
+                        </th>
+
+                        <th>
+                            Vehicle 3
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <th>
+                            Vehicle
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Year
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Mileage
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Engine
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Fuel
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Transmission
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- =============================================
+             EMPTY STATE
+             ============================================= -->
+
+        <div
+            class="comparison-empty"
+            id="comparisonEmpty"
+        >
+
+            <div class="comparison-empty-icon">
+                ⇄
+            </div>
+
+            <h2>
+                Nothing to compare yet
+            </h2>
+
+            <p>
+                Browse our marketplace and select
+                vehicles you want to compare.
+            </p>
+
+            <a
+                href="cars.html"
+                class="primary-button"
+            >
+                Browse Vehicles →
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CALL TO ACTION
+         ================================================= -->
+
+    <section class="marketplace-cta">
+
+        <div>
+
+            <span class="section-label">
+                FIND YOUR NEXT DRIVE
+            </span>
+
+            <h2>
+                Still looking?
+            </h2>
+
+            <p>
+                Explore more vehicles from sellers
+                across Kenya.
+            </p>
+
+            <a
+                href="cars.html"
+                class="primary-button"
+            >
+                Browse Cars →
+            </a>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <p>
+
+        © 2026 ChipicarsKE.
+
+        Built for the Kenyan automotive market.
+
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
+
