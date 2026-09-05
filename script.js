@@ -2946,3 +2946,15 @@ initializeContactPage();
 
 }
 );
+
+function initializeContactPage() {
+
+const form =
+document.getElementById(
+"contactForm"
+)};
+
+const message =
+document.getElementById(
+"contactMessage"
+);
