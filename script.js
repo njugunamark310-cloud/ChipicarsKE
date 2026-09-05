@@ -2931,3 +2931,18 @@ function saveListing(
 
 }
 
+
+/*-- =====================================================
+CONTACT PAGE JAVASCRIPT
+===================================================== */
+
+
+
+document.addEventListener(
+"DOMContentLoaded",
+function () {
+
+initializeContactPage();
+
+}
+);
