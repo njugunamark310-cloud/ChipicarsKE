@@ -2958,3 +2958,30 @@ const message =
 document.getElementById(
 "contactMessage"
 );
+
+const counter =
+document.getElementById(
+"messageCounter"
+);
+
+const formMessage =
+document.getElementById(
+"contactFormMessage"
+);
+
+/* ================================================
+MESSAGE COUNTER
+================================================ */
+
+message.addEventListener(
+"input",
+function () {
+
+const length =
+message.value.length;
+
+counter.textContent =
+`${length} / 500 characters`;
+
+}
+);
