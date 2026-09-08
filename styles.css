@@ -5066,3 +5066,40 @@ color: #6b7280;
 line-height: 1.7;
 
 }
+
+/* =========================================================
+BUSINESS HOURS
+========================================================= */
+
+.hours-card h3 {
+margin:
+10px 0 20px;
+}
+
+.hours-row {
+display: flex;
+
+justify-content: space-between;
+
+gap: 15px;
+
+padding: 14px 0;
+
+border-bottom:
+    1px solid #eef0f3;
+
+font-size: 0.9rem;
+
+}
+
+.hours-row {
+border-bottom: none;
+}
+
+.hours-row span {
+color: #6b7280;
+}
+
+.hours-row strong {
+text-align: right;
+}
