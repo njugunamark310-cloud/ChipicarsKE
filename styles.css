@@ -4988,3 +4988,81 @@ background: #fff1f2;
 color: #c62838;
 
 }
+
+/* =========================================================
+LOCATION
+========================================================= */
+
+.contact-location-wrapper {
+display: flex;
+
+flex-direction: column;
+
+gap: 20px;
+
+}
+
+.location-card,
+.hours-card,
+.contact-quick-links {
+padding: 30px;
+
+background: white;
+
+border: 1px solid #e7e9ee;
+
+border-radius: 18px;
+
+}
+
+.location-card h2 {
+margin: 10px 0 20px;
+}
+
+.map-placeholder {
+min-height: 230px;
+
+margin-bottom: 20px;
+
+border-radius: 14px;
+
+background:
+    linear-gradient(
+        135deg,
+        #eef1f4,
+        #dfe4e8
+    );
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+justify-content: center;
+
+text-align: center;
+
+color: #18212f;
+
+}
+
+.map-pin {
+font-size: 3rem;
+
+margin-bottom: 8px;
+
+}
+
+.map-placeholder span {
+color: #6b7280;
+
+margin-top: 5px;
+
+}
+
+.location-card > p {
+color: #6b7280;
+
+line-height: 1.7;
+
+}
