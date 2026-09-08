@@ -5103,3 +5103,41 @@ color: #6b7280;
 .hours-row strong {
 text-align: right;
 }
+
+/* =========================================================
+QUICK LINKS
+========================================================= */
+
+.contact-quick-links h3 {
+margin-bottom: 15px;
+}
+
+.contact-quick-links a {
+display: flex;
+
+align-items: center;
+justify-content: space-between;
+
+padding: 13px 0;
+
+border-bottom:
+    1px solid #eef0f3;
+
+color: #18212f;
+
+text-decoration: none;
+
+font-weight: 600;
+
+transition:
+    color 0.2s ease;
+
+}
+
+.contact-quick-links a {
+border-bottom: none;
+}
+
+.contact-quick-links a {
+color: #e63946;
+}
