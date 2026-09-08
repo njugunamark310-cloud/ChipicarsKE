@@ -4532,3 +4532,74 @@ footer > p {
     }
 
 }
+
+/* =========================================================
+CHIPICARSKE CONTACT PAGE
+========================================================= */
+
+/* =========================================================
+CONTACT HERO
+========================================================= */
+
+.contact-hero {
+max-width: 1200px;
+
+margin: auto;
+
+padding: 80px 30px;
+
+display: grid;
+
+grid-template-columns:
+    1.5fr
+    0.8fr;
+
+align-items: center;
+
+gap: 60px;
+
+}
+
+.contact-hero-content h1 {
+margin: 15px 0;
+
+font-size: clamp(
+    2.8rem,
+    5vw,
+    4.5rem
+);
+
+line-height: 1.05;
+
+}
+
+.contact-hero-content h1 span {
+display: block;
+
+color: #e63946;
+
+}
+
+.contact-hero-content > p {
+max-width: 650px;
+
+color: #6b7280;
+
+font-size: 1.05rem;
+
+line-height: 1.8;
+
+}
+
+.contact-hero-actions {
+display: flex;
+
+gap: 12px;
+
+margin-top: 30px;
+
+}
+
+.contact-hero-actions a {
+text-decoration: none;
+}
