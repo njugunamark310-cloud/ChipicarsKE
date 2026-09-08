@@ -2985,3 +2985,63 @@ counter.textContent =
 
 }
 );
+
+/* ================================================
+   FORM SUBMISSION
+   ================================================ */
+
+form.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("contactName").value.trim();
+
+    const email =
+        document.getElementById("contactEmail").value.trim();
+
+    const subject =
+        document.getElementById("contactSubject").value;
+
+    const messageText =
+        message.value.trim();
+
+
+    if (
+        !name ||
+        !email ||
+        !subject ||
+        !messageText
+    ) {
+
+        showContactMessage(
+            "Please complete all required fields.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (messageText.length < 10) {
+
+        showContactMessage(
+            "Please provide a little more detail in your message.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    showContactMessage(
+        `✓ Thanks ${name}! Your message has been received. We'll get back to you soon.`,
+        "success"
+    );
+
+
+    form.reset();
+
+    counter.textContent = "0 / 500 characters";
+
+});
