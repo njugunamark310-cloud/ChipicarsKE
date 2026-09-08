@@ -5256,3 +5256,78 @@ font-size: 0.9rem;
 .footer-links a {
 color: #e63946;
 }
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+.contact-info-grid {
+    grid-template-columns:
+        repeat(2, 1fr);
+}
+
+.contact-main-section {
+    grid-template-columns: 1fr;
+}
+
+}
+
+@media (max-width: 800px) {
+
+.contact-hero {
+    grid-template-columns: 1fr;
+
+    padding:
+        60px 25px;
+}
+
+.contact-hero-card {
+    max-width: 500px;
+}
+
+}
+
+@media (max-width: 600px) {
+
+.contact-hero {
+    padding:
+        50px 20px;
+}
+
+.contact-hero-actions {
+    flex-direction: column;
+}
+
+.contact-hero-actions a {
+    text-align: center;
+}
+
+.contact-details-section,
+.contact-main-section {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.contact-info-grid {
+    grid-template-columns: 1fr;
+}
+
+.contact-form-wrapper {
+    padding: 25px 20px;
+}
+
+.contact-form-row {
+    grid-template-columns: 1fr;
+}
+
+.hours-row {
+    flex-direction: column;
+}
+
+.hours-row strong {
+    text-align: left;
+}
+
+}
