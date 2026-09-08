@@ -4664,3 +4664,126 @@ margin-bottom: 20px;
 .contact-hero-card strong {
 color: white;
 }
+
+/* =========================================================
+CONTACT DETAILS
+========================================================= */
+
+.contact-details-section {
+max-width: 1200px;
+
+margin: auto;
+
+padding: 40px 30px 90px;
+
+}
+
+.contact-details-section
+.section-title {
+max-width: 650px;
+
+margin-bottom: 45px;
+
+}
+
+.contact-info-grid {
+display: grid;
+
+grid-template-columns:
+    repeat(
+        4,
+        minmax(0, 1fr)
+    );
+
+gap: 20px;
+
+}
+
+.contact-info-card {
+padding: 28px;
+
+background: white;
+
+border: 1px solid #e7e9ee;
+
+border-radius: 16px;
+
+transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+}
+
+.contact-info-card {
+transform: translateY(-5px);
+
+box-shadow:
+    0 15px 35px
+    rgba(0,0,0,0.08);
+
+}
+
+.contact-card-icon {
+width: 52px;
+height: 52px;
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+margin-bottom: 20px;
+
+border-radius: 12px;
+
+background: #fff1f2;
+
+color: #e63946;
+
+font-size: 1.4rem;
+
+}
+
+.contact-info-card > span {
+color: #e63946;
+
+font-size: 0.7rem;
+
+font-weight: 800;
+
+letter-spacing: 1px;
+
+}
+
+.contact-info-card h3 {
+margin: 9px 0;
+
+font-size: 1.05rem;
+
+word-break: break-word;
+
+}
+
+.contact-info-card p {
+min-height: 55px;
+
+color: #6b7280;
+
+line-height: 1.6;
+
+font-size: 0.9rem;
+
+}
+
+.contact-info-card a {
+display: inline-block;
+
+margin-top: 12px;
+
+color: #e63946;
+
+font-weight: 700;
+
+text-decoration: none;
+
+}
