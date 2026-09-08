@@ -3045,3 +3045,52 @@ form.addEventListener("submit", function (event) {
     counter.textContent = "0 / 500 characters";
 
 });
+/* ========================================
+SAVE MESSAGE LOCALLY
+======================================== */
+
+const contactMessage = {
+
+id:
+"message-" +
+Date.now(),
+
+name:
+name,
+
+email:
+email,
+
+phone:
+document.getElementById(
+"contactPhone"
+).value.trim(),
+
+subject:
+subject,
+
+message:
+messageText,
+
+createdAt:
+new Date().toISOString()
+
+};
+
+const savedMessages =
+JSON.parse(
+localStorage.getItem(
+"chipicarskeContactMessages"
+)
+) || [];
+
+savedMessages.push(
+contactMessage
+);
+
+localStorage.setItem(
+"chipicarskeContactMessages",
+JSON.stringify(
+savedMessages
+)
+);
