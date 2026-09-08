@@ -5226,3 +5226,33 @@ color: #6b7280;
 line-height: 1.7;
 
 }
+
+/* =========================================================
+FOOTER LINKS
+========================================================= */
+
+.footer-links {
+display: flex;
+
+gap: 20px;
+
+flex-wrap: wrap;
+
+justify-content: center;
+
+margin: 20px 0;
+
+}
+
+.footer-links a {
+color: inherit;
+
+text-decoration: none;
+
+font-size: 0.9rem;
+
+}
+
+.footer-links a {
+color: #e63946;
+}
