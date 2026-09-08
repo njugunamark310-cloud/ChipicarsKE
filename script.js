@@ -3094,3 +3094,35 @@ JSON.stringify(
 savedMessages
 )
 );
+
+/* ========================================
+   SUCCESS
+   ======================================== */
+
+showContactMessage(
+    `✓ Thanks ${name}! Your message has been received. We'll get back to you soon.`,
+    "success"
+);
+
+form.reset();
+
+counter.textContent = "0 / 500 characters";
+
+
+/* ========================================
+   SHOW CONTACT MESSAGE
+   ======================================== */
+
+function showContactMessage(text, type) {
+
+    formMessage.textContent = text;
+
+    formMessage.className =
+        `contact-form-message ${type}`;
+
+    formMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+}
