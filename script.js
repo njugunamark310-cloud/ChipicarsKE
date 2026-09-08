@@ -1,1205 +1,895 @@
-/* =========================================================
-   CHIPICARSKE - MASTER JAVASCRIPT
-   =========================================================
-
-   Features:
-   ✓ Smooth navigation
-   ✓ Hero interactions
-   ✓ Search and filtering
-   ✓ Vehicle sorting
-   ✓ Favourites
-   ✓ Garage
-   ✓ Compare system
-   ✓ Contact form
-   ✓ Animated statistics
-   ✓ Scroll reveal effects
-   ✓ Button feedback
-   ✓ LocalStorage
-   ✓ Notifications
-
-   Designed to work across:
-   index.html
-   cars.html
-   compare.html
-   motorcycle.html
-   garage.html
-   sell.html
-   ========================================================= */
-
 
 /* =========================================================
-   1. CONFIGURATION
-   ========================================================= */
+
+CONFIGURATION
+========================================================= */
 
 const CHIPICARSKE = {
 
-    storage: {
-        favourites: "chipicarskeFavourites",
-        comparison: "chipicarskeComparison",
-        motorcycles: "chipicarskeMotorcycleComparison"
-    },
+storage: {
+    favourites: "chipicarskeFavourites",
+    comparison: "chipicarskeComparison",
+    motorcycleComparison: "chipicarskeMotorcycleComparison",
+    listings: "chipicarskeListings",
+    messages: "chipicarskeContactMessages"
+},
 
-    comparisonLimit: 3
+comparisonLimit: 3,
+
+selectors: {
+    vehicleCards: ".car-card, .vehicle-card"
+}
 
 };
 
-
 /* =========================================================
-   2. APPLICATION START
-   ========================================================= */
+2. APPLICATION START
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-    console.log(
-        "🚗 ChipicarsKE application started."
-    );
+console.log("🚗 ChipicarsKE application started.");
 
+initializeFavourites();
+initializeSearch();
+initializeSorting();
+initializeComparisonButtons();
+initializeNavigation();
 
-    initializeFavourites();
+initializeContactForm();
+initializeContactPage();
 
-    initializeSearch();
+initializeScrollEffects();
+initializeAnimatedStats();
 
-    initializeSorting();
+initializeGarage();
+initializeGarageActions();
 
-    initializeComparisonButtons();
+initializeHeroEffects();
+initializeCardEffects();
 
-    initializeNavigation();
+initializeSellPage();
 
-    initializeContactForm();
+updateFavouriteCount();
+updateComparisonCount();
 
-    initializeScrollEffects();
-
-    initializeAnimatedStats();
-
-    initializeGarage();
-
-    initializeHeroEffects();
-
-    initializeCardEffects();
-
-    updateFavouriteCount();
-
-    updateComparisonCount();
+console.log("🚘 ChipicarsKE is ready.");
 
 });
 
-
 /* =========================================================
-   3. LOCAL STORAGE
-   ========================================================= */
+3. LOCAL STORAGE
+========================================================= */
 
 function getStorage(key) {
 
-    try {
+try {
 
-        const stored =
-            localStorage.getItem(key);
+    const stored = localStorage.getItem(key);
 
-        if (!stored) {
-
-            return [];
-
-        }
-
-        const data =
-            JSON.parse(stored);
-
-        return Array.isArray(data)
-            ? data
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Storage error:",
-            error
-        );
-
+    if (!stored) {
         return [];
-
     }
+
+    const data = JSON.parse(stored);
+
+    return Array.isArray(data) ? data : [];
+
+} catch (error) {
+
+    console.error("ChipicarsKE storage error:", error);
+
+    return [];
 
 }
 
+}
 
 function saveStorage(key, data) {
 
-    try {
+try {
 
-        localStorage.setItem(
-            key,
-            JSON.stringify(data)
-        );
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
 
-    } catch (error) {
+} catch (error) {
 
-        console.error(
-            "Could not save data:",
-            error
-        );
-
-    }
+    console.error(
+        "ChipicarsKE could not save data:",
+        error
+    );
 
 }
 
+}
 
 /* =========================================================
-   4. VEHICLE DATA
-   ========================================================= */
+4. VEHICLE DATA
+========================================================= */
 
 function getVehicleFromCard(card) {
 
-    if (!card) return null;
+if (!card) {
+    return null;
+}
 
+const image = card.querySelector("img");
+const title = card.querySelector("h3");
 
-    const image =
-        card.querySelector("img");
+const details = card.querySelectorAll(
+    ".car-info p, .vehicle-info p"
+);
 
+const price =
+    card.dataset.price ||
+    extractNumber(
+        card.querySelector(".car-price, .vehicle-price")
+            ?.textContent
+    );
 
-    const title =
-        card.querySelector("h3");
+let year = "";
+let engine = "";
+let fuel = "";
+let transmission = "";
 
+const detailText = Array.from(details)
+    .map(item => item.textContent.trim())
+    .join(" ");
 
-    const details =
-        card.querySelectorAll(
-            ".car-info p"
-        );
+const yearMatch = detailText.match(
+    /\b(19|20)\d{2}\b/
+);
 
+const engineMatch = detailText.match(
+    /\b\d+(?:\.\d+)?\s*L\b/i
+);
 
-    const price =
-        card.dataset.price ||
-        extractNumber(
-            card.querySelector(
-                ".car-price"
-            )?.textContent
-        );
+const fuelMatch = detailText.match(
+    /\b(Petrol|Diesel|Hybrid|Electric)\b/i
+);
 
+const transmissionMatch = detailText.match(
+    /\b(Automatic|Manual|CVT|DCT)\b/i
+);
 
-    let year = "";
+if (yearMatch) {
+    year = yearMatch[0];
+}
 
-    let engine = "";
+if (engineMatch) {
+    engine = engineMatch[0];
+}
 
-    let fuel = "";
+if (fuelMatch) {
+    fuel = fuelMatch[0];
+}
 
-    let transmission = "";
+if (transmissionMatch) {
+    transmission = transmissionMatch[0];
+}
 
+const name =
+    title?.textContent.trim() ||
+    "Unknown Vehicle";
 
-    if (details[0]) {
+return {
 
-        const text =
-            details[0].textContent.trim();
+    id:
+        card.dataset.id ||
+        createVehicleId(
+            name,
+            card.dataset.location,
+            card.dataset.price
+        ),
 
+    name,
 
-        const yearMatch =
-            text.match(
-                /\b(19|20)\d{2}\b/
-            );
+    make:
+        card.dataset.make ||
+        "",
 
+    model:
+        card.dataset.model ||
+        "",
 
-        const engineMatch =
-            text.match(
-                /[\d.]+\s*L/i
-            );
+    price:
+        Number(price) || 0,
 
+    location:
+        card.dataset.location ||
+        "",
 
-        const fuelMatch =
-            text.match(
-                /Petrol|Diesel|Hybrid|Electric/i
-            );
+    year,
 
+    engine,
 
-        const transmissionMatch =
-            text.match(
-                /Automatic|Manual|CVT|DCT/i
-            );
+    fuel,
 
+    transmission,
 
-        if (yearMatch) {
+    image:
+        image?.src ||
+        "",
 
-            year =
-                yearMatch[0];
+    type:
+        card.dataset.type ||
+        "car"
 
-        }
-
-
-        if (engineMatch) {
-
-            engine =
-                engineMatch[0];
-
-        }
-
-
-        if (fuelMatch) {
-
-            fuel =
-                fuelMatch[0];
-
-        }
-
-
-        if (transmissionMatch) {
-
-            transmission =
-                transmissionMatch[0];
-
-        }
-
-    }
-
-
-    return {
-
-        id:
-            card.dataset.id ||
-            createVehicleId(
-                title?.textContent,
-                card.dataset.location
-            ),
-
-        name:
-            title?.textContent.trim() ||
-            "Unknown Vehicle",
-
-        make:
-            card.dataset.make || "",
-
-        model:
-            card.dataset.model || "",
-
-        price:
-            Number(price) || 0,
-
-        location:
-            card.dataset.location || "",
-
-        year,
-
-        engine,
-
-        fuel,
-
-        transmission,
-
-        image:
-            image?.src || "",
-
-        type:
-            card.dataset.type || "car"
-
-    };
+};
 
 }
 
-
 /* =========================================================
-   5. CREATE VEHICLE ID
-   ========================================================= */
+5. CREATE VEHICLE ID
+========================================================= */
 
 function createVehicleId(
-    name = "",
-    location = ""
+name = "",
+location = "",
+price = ""
 ) {
 
-    return (
-
-        `${name}-${location}`
-
-    )
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-        .replace(
-            /^-|-$/g,
-            ""
-        );
+return `${name}-${location}-${price}`
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 }
 
-
 /* =========================================================
-   6. NUMBER EXTRACTION
-   ========================================================= */
+6. NUMBER EXTRACTION
+========================================================= */
 
 function extractNumber(value) {
 
-    if (!value) {
+if (!value) {
+    return 0;
+}
 
-        return 0;
+const number = String(value)
+    .replace(/,/g, "")
+    .replace(/[^0-9.]/g, "");
 
-    }
-
-
-    const number =
-        String(value)
-            .replace(
-                /[^0-9.]/g,
-                ""
-            );
-
-
-    return Number(number) || 0;
+return Number(number) || 0;
 
 }
 
-
 /* =========================================================
-   7. FAVOURITES
-   ========================================================= */
+7. FAVOURITES
+========================================================= */
 
 function initializeFavourites() {
 
-    const buttons =
-        document.querySelectorAll(
-            ".card-favourite, .vehicle-favourite"
-        );
+const buttons = document.querySelectorAll(
+    ".card-favourite, .vehicle-favourite"
+);
 
+const favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
 
-    const favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
-        );
+buttons.forEach(button => {
 
+    const card = button.closest(
+        ".car-card, .vehicle-card"
+    );
 
-    buttons.forEach(function (button) {
-
-        const card =
-            button.closest(
-                ".car-card, .vehicle-card"
-            );
-
-
-        if (!card) return;
-
-
-        const vehicle =
-            getVehicleFromCard(card);
-
-
-        const exists =
-            favourites.some(
-                function (item) {
-
-                    return (
-                        item.id ===
-                        vehicle.id
-                    );
-
-                }
-            );
-
-
-        updateFavouriteButton(
-            button,
-            exists
-        );
-
-
-        button.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-
-                toggleFavourite(
-                    vehicle,
-                    button
-                );
-
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   8. TOGGLE FAVOURITE
-   ========================================================= */
-
-function toggleFavourite(
-    vehicle,
-    button
-) {
-
-    let favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
-        );
-
-
-    const index =
-        favourites.findIndex(
-            function (item) {
-
-                return (
-                    item.id ===
-                    vehicle.id
-                );
-
-            }
-        );
-
-
-    if (index >= 0) {
-
-        favourites.splice(
-            index,
-            1
-        );
-
-
-        updateFavouriteButton(
-            button,
-            false
-        );
-
-
-        showNotification(
-            `${vehicle.name} removed from your garage.`,
-            "info"
-        );
-
-    } else {
-
-        favourites.push(
-            vehicle
-        );
-
-
-        updateFavouriteButton(
-            button,
-            true
-        );
-
-
-        showNotification(
-            `${vehicle.name} saved to your garage.`,
-            "success"
-        );
-
+    if (!card) {
+        return;
     }
 
+    const vehicle = getVehicleFromCard(card);
 
-    saveStorage(
-        CHIPICARSKE.storage.favourites,
-        favourites
+    if (!vehicle) {
+        return;
+    }
+
+    const exists = favourites.some(
+        item => item.id === vehicle.id
     );
 
-
-    updateFavouriteCount();
-
-    updateGaragePreview();
-
-}
-
-
-/* =========================================================
-   9. FAVOURITE BUTTON
-   ========================================================= */
-
-function updateFavouriteButton(
-    button,
-    active
-) {
-
-    if (!button) return;
-
-
-    button.textContent =
-        active ? "♥" : "♡";
-
-
-    button.classList.toggle(
-        "active",
-        active
+    updateFavouriteButton(
+        button,
+        exists
     );
 
+    if (button.dataset.favouriteInitialized) {
+        return;
+    }
 
-    button.setAttribute(
-        "aria-pressed",
-        active
-    );
+    button.dataset.favouriteInitialized = "true";
 
-}
+    button.addEventListener("click", event => {
 
+        event.preventDefault();
+        event.stopPropagation();
 
-/* =========================================================
-   10. FAVOURITE COUNTER
-   ========================================================= */
-
-function updateFavouriteCount() {
-
-    const counter =
-        document.getElementById(
-            "favoriteCount"
-        );
-
-
-    if (!counter) return;
-
-
-    const favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
-        );
-
-
-    counter.textContent =
-        favourites.length;
-
-}
-
-
-/* =========================================================
-   11. SEARCH
-   ========================================================= */
-
-function initializeSearch() {
-
-    const searchButton =
-        document.getElementById(
-            "searchButton"
-        );
-
-
-    if (!searchButton) return;
-
-
-    searchButton.addEventListener(
-        "click",
-        function () {
-
-            const make =
-                document.getElementById(
-                    "make"
-                )?.value;
-
-
-            const model =
-                document.getElementById(
-                    "model"
-                )?.value;
-
-
-            const price =
-                document.getElementById(
-                    "price"
-                )?.value;
-
-
-            const location =
-                document.getElementById(
-                    "location"
-                )?.value;
-
-
-            const cards =
-                document.querySelectorAll(
-                    ".car-card"
-                );
-
-
-            let visibleCars = 0;
-
-
-            cards.forEach(function (card) {
-
-                const cardMake =
-                    card.dataset.make || "";
-
-
-                const cardModel =
-                    card.dataset.model || "";
-
-
-                const cardPrice =
-                    Number(
-                        card.dataset.price || 0
-                    );
-
-
-                const cardLocation =
-                    card.dataset.location || "";
-
-
-                let visible = true;
-
-
-                if (
-                    make &&
-                    cardMake !== make
-                ) {
-
-                    visible = false;
-
-                }
-
-
-                /*
-                   Model matching is made flexible
-                   so "7 Series" and "BMW7"
-                   can still be handled later.
-                */
-
-                if (
-                    model &&
-                    cardModel !== model
-                ) {
-
-                    visible = false;
-
-                }
-
-
-                if (
-                    price &&
-                    cardPrice >
-                    Number(price) * 1000000
-                ) {
-
-                    visible = false;
-
-                }
-
-
-                if (
-                    location &&
-                    cardLocation !== location
-                ) {
-
-                    visible = false;
-
-                }
-
-
-                card.classList.toggle(
-                    "search-hidden",
-                    !visible
-                );
-
-
-                if (visible) {
-
-                    visibleCars++;
-
-                }
-
-            });
-
-
-            if (visibleCars === 0) {
-
-                showNotification(
-                    "No vehicles match your search.",
-                    "warning"
-                );
-
-            } else {
-
-                showNotification(
-                    `${visibleCars} vehicle${visibleCars === 1 ? "" : "s"} found.`,
-                    "success"
-                );
-
-            }
-
-
-            document
-                .getElementById("browse")
-                ?.scrollIntoView({
-                    behavior: "smooth"
-                });
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   12. SORTING
-   ========================================================= */
-
-function initializeSorting() {
-
-    const sort =
-        document.getElementById(
-            "sortVehicles"
-        );
-
-
-    const grid =
-        document.getElementById(
-            "vehicleGrid"
-        );
-
-
-    if (!sort || !grid) return;
-
-
-    sort.addEventListener(
-        "change",
-        function () {
-
-            const cards =
-                Array.from(
-                    grid.querySelectorAll(
-                        ".vehicle-card"
-                    )
-                );
-
-
-            cards.sort(
-                function (a, b) {
-
-                    const priceA =
-                        Number(
-                            a.dataset.price || 0
-                        );
-
-
-                    const priceB =
-                        Number(
-                            b.dataset.price || 0
-                        );
-
-
-                    if (
-                        sort.value === "low"
-                    ) {
-
-                        return (
-                            priceA - priceB
-                        );
-
-                    }
-
-
-                    if (
-                        sort.value === "high"
-                    ) {
-
-                        return (
-                            priceB - priceA
-                        );
-
-                    }
-
-
-                    return 0;
-
-                }
-            );
-
-
-            cards.forEach(
-                function (card) {
-
-                    grid.appendChild(
-                        card
-                    );
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   13. COMPARE BUTTONS
-   ========================================================= */
-
-function initializeComparisonButtons() {
-
-    const cards =
-        document.querySelectorAll(
-            ".car-card, .vehicle-card"
-        );
-
-
-    cards.forEach(function (card) {
-
-        if (
-            card.querySelector(
-                ".compare-button"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        const vehicle =
-            getVehicleFromCard(card);
-
-
-        const info =
-            card.querySelector(
-                ".car-info, .vehicle-info"
-            );
-
-
-        if (!info) return;
-
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.type =
-            "button";
-
-
-        button.className =
-            "compare-button";
-
-
-        button.innerHTML =
-            "⇄ Compare";
-
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                addToComparison(
-                    vehicle
-                );
-
-            }
-        );
-
-
-        info.appendChild(
+        toggleFavourite(
+            vehicle,
             button
         );
 
     });
 
+});
+
 }
 
-
 /* =========================================================
-   14. ADD TO COMPARISON
-   ========================================================= */
+8. TOGGLE FAVOURITE
+========================================================= */
 
-function addToComparison(
-    vehicle
+function toggleFavourite(
+vehicle,
+button
 ) {
 
-    let comparison =
-        getStorage(
-            CHIPICARSKE.storage.comparison
-        );
+let favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
 
+const index = favourites.findIndex(
+    item => item.id === vehicle.id
+);
 
-    const exists =
-        comparison.some(
-            function (item) {
+if (index >= 0) {
 
-                return (
-                    item.id ===
-                    vehicle.id
-                );
+    favourites.splice(index, 1);
 
-            }
-        );
-
-
-    if (exists) {
-
-        showNotification(
-            `${vehicle.name} is already being compared.`,
-            "warning"
-        );
-
-        return;
-
-    }
-
-
-    if (
-        comparison.length >=
-        CHIPICARSKE.comparisonLimit
-    ) {
-
-        showNotification(
-            "You can compare a maximum of 3 vehicles.",
-            "warning"
-        );
-
-        return;
-
-    }
-
-
-    comparison.push(
-        vehicle
+    updateFavouriteButton(
+        button,
+        false
     );
-
-
-    saveStorage(
-        CHIPICARSKE.storage.comparison,
-        comparison
-    );
-
-
-    updateComparisonCount();
-
 
     showNotification(
-        `${vehicle.name} added to comparison.`,
-        "success"
-    );
-
-
-    /*
-       Ask user whether they want
-       to see the comparison.
-    */
-
-    setTimeout(function () {
-
-        const notification =
-            document.querySelector(
-                ".chipicars-notification"
-            );
-
-
-        if (notification) {
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-
-            link.href =
-                "compare.html";
-
-
-            link.textContent =
-                " View Comparison";
-
-
-            link.className =
-                "notification-link";
-
-
-            notification.appendChild(
-                link
-            );
-
-        }
-
-    }, 50);
-
-}
-
-
-/* =========================================================
-   15. COMPARISON COUNT
-   ========================================================= */
-
-function updateComparisonCount() {
-
-    const comparison =
-        getStorage(
-            CHIPICARSKE.storage.comparison
-        );
-
-
-    const counters =
-        document.querySelectorAll(
-            "#comparisonCount"
-        );
-
-
-    counters.forEach(
-        function (counter) {
-
-            counter.textContent =
-                comparison.length;
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   16. REMOVE COMPARISON
-   ========================================================= */
-
-function removeFromComparison(
-    vehicleId
-) {
-
-    let comparison =
-        getStorage(
-            CHIPICARSKE.storage.comparison
-        );
-
-
-    comparison =
-        comparison.filter(
-            function (vehicle) {
-
-                return (
-                    vehicle.id !==
-                    vehicleId
-                );
-
-            }
-        );
-
-
-    saveStorage(
-        CHIPICARSKE.storage.comparison,
-        comparison
-    );
-
-
-    updateComparisonCount();
-
-
-    /*
-       If comparison page exists,
-       refresh it.
-    */
-
-    if (
-        typeof renderComparisonPage ===
-        "function"
-    ) {
-
-        renderComparisonPage();
-
-    }
-
-
-    showNotification(
-        "Vehicle removed from comparison.",
+        `${vehicle.name} removed from your garage.`,
         "info"
     );
 
-}
+} else {
 
+    favourites.push(vehicle);
 
-/* =========================================================
-   17. CLEAR COMPARISON
-   ========================================================= */
-
-function clearComparison() {
-
-    saveStorage(
-        CHIPICARSKE.storage.comparison,
-        []
+    updateFavouriteButton(
+        button,
+        true
     );
 
-
-    updateComparisonCount();
-
-
-    if (
-        typeof renderComparisonPage ===
-        "function"
-    ) {
-
-        renderComparisonPage();
-
-    }
-
-
     showNotification(
-        "Comparison cleared.",
+        `${vehicle.name} saved to your garage.`,
         "success"
     );
 
 }
 
+saveStorage(
+    CHIPICARSKE.storage.favourites,
+    favourites
+);
 
-/* =========================================================
-   18. GARAGE
-   ========================================================= */
-
-function initializeGarage() {
-
-    updateGaragePreview();
+updateFavouriteCount();
+updateGaragePreview();
 
 }
 
+/* =========================================================
+9. FAVOURITE BUTTON
+========================================================= */
+
+function updateFavouriteButton(
+button,
+active
+) {
+
+if (!button) {
+    return;
+}
+
+button.textContent =
+    active ? "♥" : "♡";
+
+button.classList.toggle(
+    "active",
+    active
+);
+
+button.setAttribute(
+    "aria-pressed",
+    String(active)
+);
+
+button.setAttribute(
+    "title",
+    active
+        ? "Remove from favourites"
+        : "Add to favourites"
+);
+
+}
 
 /* =========================================================
-   19. GARAGE PREVIEW
-   ========================================================= */
+10. FAVOURITE COUNTER
+========================================================= */
 
-function updateGaragePreview() {
+function updateFavouriteCount() {
 
-    const garage =
-        document.querySelector(
-            ".garage-preview"
+const counter = document.getElementById(
+    "favoriteCount"
+);
+
+if (!counter) {
+    return;
+}
+
+const favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
+
+counter.textContent = favourites.length;
+
+}
+
+/* =========================================================
+11. SEARCH
+========================================================= */
+
+function initializeSearch() {
+
+const searchButton = document.getElementById(
+    "searchButton"
+);
+
+if (!searchButton) {
+    return;
+}
+
+if (searchButton.dataset.searchInitialized) {
+    return;
+}
+
+searchButton.dataset.searchInitialized = "true";
+
+searchButton.addEventListener("click", () => {
+
+    const make =
+        document.getElementById("make")
+            ?.value.trim()
+            .toLowerCase() || "";
+
+    const model =
+        document.getElementById("model")
+            ?.value.trim()
+            .toLowerCase() || "";
+
+    const price =
+        document.getElementById("price")
+            ?.value || "";
+
+    const location =
+        document.getElementById("location")
+            ?.value.trim()
+            .toLowerCase() || "";
+
+    const cards = document.querySelectorAll(
+        ".car-card"
+    );
+
+    let visibleCars = 0;
+
+    cards.forEach(card => {
+
+        const cardMake =
+            (card.dataset.make || "")
+                .toLowerCase();
+
+        const cardModel =
+            (card.dataset.model || "")
+                .toLowerCase();
+
+        const cardLocation =
+            (card.dataset.location || "")
+                .toLowerCase();
+
+        const cardPrice =
+            Number(card.dataset.price || 0);
+
+        let visible = true;
+
+        /* Make */
+
+        if (
+            make &&
+            !cardMake.includes(make)
+        ) {
+            visible = false;
+        }
+
+        /* Model */
+
+        if (
+            model &&
+            !cardModel.includes(model)
+        ) {
+            visible = false;
+        }
+
+        /* Price */
+
+        if (
+            price &&
+            cardPrice > Number(price)
+        ) {
+            visible = false;
+        }
+
+        /* Location */
+
+        if (
+            location &&
+            !cardLocation.includes(location)
+        ) {
+            visible = false;
+        }
+
+        card.classList.toggle(
+            "search-hidden",
+            !visible
         );
 
+        if (visible) {
+            visibleCars++;
+        }
 
-    if (!garage) return;
+    });
 
+    if (visibleCars === 0) {
 
-    const favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
+        showNotification(
+            "No vehicles match your search.",
+            "warning"
         );
 
+    } else {
 
-    if (
-        favourites.length === 0
-    ) {
-
-        garage.innerHTML = `
-
-            <span class="garage-heart">
-                ♡
-            </span>
-
-            <h3>
-                Your Garage
-            </h3>
-
-            <p>
-                No saved cars yet.
-            </p>
-
-            <a
-                href="#browse"
-                class="garage-link"
-            >
-                Browse Cars →
-            </a>
-
-        `;
-
-        return;
+        showNotification(
+            `${visibleCars} vehicle${visibleCars === 1 ? "" : "s"} found.`,
+            "success"
+        );
 
     }
 
+    document
+        .getElementById("browse")
+        ?.scrollIntoView({
+            behavior: "smooth"
+        });
+
+});
+
+}
+
+/* =========================================================
+12. SORTING
+========================================================= */
+
+function initializeSorting() {
+
+const sort = document.getElementById(
+    "sortVehicles"
+);
+
+const grid = document.getElementById(
+    "vehicleGrid"
+);
+
+if (!sort || !grid) {
+    return;
+}
+
+if (sort.dataset.sortInitialized) {
+    return;
+}
+
+sort.dataset.sortInitialized = "true";
+
+sort.addEventListener("change", () => {
+
+    const cards = Array.from(
+        grid.querySelectorAll(
+            ".vehicle-card, .car-card"
+        )
+    );
+
+    cards.sort((a, b) => {
+
+        const priceA =
+            Number(a.dataset.price || 0);
+
+        const priceB =
+            Number(b.dataset.price || 0);
+
+        const yearA =
+            Number(a.dataset.year || 0);
+
+        const yearB =
+            Number(b.dataset.year || 0);
+
+        switch (sort.value) {
+
+            case "low":
+                return priceA - priceB;
+
+            case "high":
+                return priceB - priceA;
+
+            case "newest":
+                return yearB - yearA;
+
+            case "oldest":
+                return yearA - yearB;
+
+            default:
+                return 0;
+
+        }
+
+    });
+
+    cards.forEach(card => {
+        grid.appendChild(card);
+    });
+
+});
+
+}
+
+/* =========================================================
+13. COMPARE BUTTONS
+========================================================= */
+
+function initializeComparisonButtons() {
+
+const cards = document.querySelectorAll(
+    CHIPICARSKE.selectors.vehicleCards
+);
+
+cards.forEach(card => {
+
+    const info = card.querySelector(
+        ".car-info, .vehicle-info"
+    );
+
+    if (!info) {
+        return;
+    }
+
+    if (
+        info.querySelector(".compare-button")
+    ) {
+        return;
+    }
+
+    const vehicle = getVehicleFromCard(card);
+
+    if (!vehicle) {
+        return;
+    }
+
+    const button =
+        document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+        "compare-button";
+
+    button.innerHTML =
+        "⇄ Compare";
+
+    button.setAttribute(
+        "aria-label",
+        `Compare ${vehicle.name}`
+    );
+
+    button.addEventListener(
+        "click",
+        () => {
+            addToComparison(vehicle);
+        }
+    );
+
+    info.appendChild(button);
+
+});
+
+}
+
+/* =========================================================
+14. ADD TO COMPARISON
+========================================================= */
+
+function addToComparison(vehicle) {
+
+if (!vehicle) {
+    return;
+}
+
+let comparison = getStorage(
+    CHIPICARSKE.storage.comparison
+);
+
+const exists = comparison.some(
+    item => item.id === vehicle.id
+);
+
+if (exists) {
+
+    showNotification(
+        `${vehicle.name} is already being compared.`,
+        "warning"
+    );
+
+    return;
+}
+
+if (
+    comparison.length >=
+    CHIPICARSKE.comparisonLimit
+) {
+
+    showNotification(
+        "You can compare a maximum of 3 vehicles.",
+        "warning"
+    );
+
+    return;
+}
+
+comparison.push(vehicle);
+
+saveStorage(
+    CHIPICARSKE.storage.comparison,
+    comparison
+);
+
+updateComparisonCount();
+
+showNotification(
+    `${vehicle.name} added to comparison.`,
+    "success"
+);
+
+}
+
+/* =========================================================
+15. COMPARISON COUNT
+========================================================= */
+
+function updateComparisonCount() {
+
+const comparison = getStorage(
+    CHIPICARSKE.storage.comparison
+);
+
+const counters = document.querySelectorAll(
+    "#comparisonCount"
+);
+
+counters.forEach(counter => {
+
+    counter.textContent =
+        comparison.length;
+
+});
+
+}
+
+/* =========================================================
+16. REMOVE COMPARISON
+========================================================= */
+
+function removeFromComparison(vehicleId) {
+
+let comparison = getStorage(
+    CHIPICARSKE.storage.comparison
+);
+
+comparison = comparison.filter(
+    vehicle => vehicle.id !== vehicleId
+);
+
+saveStorage(
+    CHIPICARSKE.storage.comparison,
+    comparison
+);
+
+updateComparisonCount();
+
+if (
+    typeof renderComparisonPage ===
+    "function"
+) {
+    renderComparisonPage();
+}
+
+showNotification(
+    "Vehicle removed from comparison.",
+    "info"
+);
+
+}
+
+/* =========================================================
+17. CLEAR COMPARISON
+========================================================= */
+
+function clearComparison() {
+
+saveStorage(
+    CHIPICARSKE.storage.comparison,
+    []
+);
+
+updateComparisonCount();
+
+if (
+    typeof renderComparisonPage ===
+    "function"
+) {
+    renderComparisonPage();
+}
+
+showNotification(
+    "Comparison cleared.",
+    "success"
+);
+
+}
+
+/* =========================================================
+18. GARAGE
+========================================================= */
+
+function initializeGarage() {
+
+updateGaragePreview();
+
+if (
+    document.getElementById("garageGrid")
+) {
+    renderGaragePage();
+}
+
+}
+
+/* =========================================================
+19. GARAGE PREVIEW
+========================================================= */
+
+function updateGaragePreview() {
+
+const garage =
+    document.querySelector(
+        ".garage-preview"
+    );
+
+if (!garage) {
+    return;
+}
+
+const favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
+
+if (favourites.length === 0) {
 
     garage.innerHTML = `
 
         <span class="garage-heart">
-            ♥
+            ♡
         </span>
 
         <h3>
@@ -1207,1475 +897,1639 @@ function updateGaragePreview() {
         </h3>
 
         <p>
-            You have
-            <strong>${favourites.length}</strong>
-            saved vehicle${favourites.length === 1 ? "" : "s"}.
+            No saved cars yet.
         </p>
 
-        <button
-            type="button"
+        <a
+            href="#browse"
             class="garage-link"
-            id="viewGarageButton"
         >
-            View Saved Cars →
-        </button>
+            Browse Cars →
+        </a>
 
     `;
 
+    return;
+}
 
-    document
-        .getElementById(
-            "viewGarageButton"
-        )
-        ?.addEventListener(
-            "click",
-            function () {
+garage.innerHTML = `
 
-                window.location.href =
-                    "garage.html";
+    <span class="garage-heart">
+        ♥
+    </span>
 
-            }
-        );
+    <h3>
+        Your Garage
+    </h3>
+
+    <p>
+        You have
+        <strong>${favourites.length}</strong>
+        saved vehicle${favourites.length === 1 ? "" : "s"}.
+    </p>
+
+    <button
+        type="button"
+        class="garage-link"
+        id="viewGarageButton"
+    >
+        View Saved Cars →
+    </button>
+
+`;
+
+document
+    .getElementById("viewGarageButton")
+    ?.addEventListener("click", () => {
+
+        window.location.href =
+            "garage.html";
+
+    });
 
 }
 
+/* =========================================================
+20. GARAGE PAGE
+========================================================= */
+
+function renderGaragePage() {
+
+const garageGrid =
+    document.getElementById(
+        "garageGrid"
+    );
+
+const emptyGarage =
+    document.getElementById(
+        "garageEmpty"
+    );
+
+const subtitle =
+    document.getElementById(
+        "garageSubtitle"
+    );
+
+if (!garageGrid) {
+    return;
+}
+
+const favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
+
+garageGrid.innerHTML = "";
+
+if (favourites.length === 0) {
+
+    if (emptyGarage) {
+        emptyGarage.style.display = "flex";
+    }
+
+    if (subtitle) {
+        subtitle.textContent =
+            "You haven't saved any vehicles yet.";
+    }
+
+    return;
+}
+
+if (emptyGarage) {
+    emptyGarage.style.display = "none";
+}
+
+if (subtitle) {
+
+    subtitle.textContent =
+        `${favourites.length} vehicle${favourites.length === 1 ? "" : "s"} saved in your garage.`;
+
+}
+
+favourites.forEach(vehicle => {
+
+    const card =
+        createGarageCard(vehicle);
+
+    garageGrid.appendChild(card);
+
+});
+
+}
 
 /* =========================================================
-   20. NAVIGATION
-   ========================================================= */
+21. CREATE GARAGE CARD
+========================================================= */
+
+function createGarageCard(vehicle) {
+
+const card =
+    document.createElement("article");
+
+card.className =
+    "garage-car-card";
+
+card.innerHTML = `
+
+    <div class="garage-car-image">
+
+        <img
+            src="${escapeHTML(vehicle.image)}"
+            alt="${escapeHTML(vehicle.name)}"
+            loading="lazy"
+        >
+
+        <button
+            type="button"
+            class="garage-remove-button"
+            aria-label="Remove ${escapeHTML(vehicle.name)}"
+        >
+            ♥
+        </button>
+
+    </div>
+
+    <div class="garage-car-info">
+
+        <span class="garage-location">
+            📍 ${escapeHTML(vehicle.location || "Kenya")}
+        </span>
+
+        <h3>
+            ${escapeHTML(vehicle.name)}
+        </h3>
+
+        <p class="garage-specs">
+
+            ${escapeHTML(vehicle.year || "Year N/A")}
+
+            ${
+                vehicle.engine
+                    ? ` • ${escapeHTML(vehicle.engine)}`
+                    : ""
+            }
+
+            ${
+                vehicle.fuel
+                    ? ` • ${escapeHTML(vehicle.fuel)}`
+                    : ""
+            }
+
+            ${
+                vehicle.transmission
+                    ? ` • ${escapeHTML(vehicle.transmission)}`
+                    : ""
+            }
+
+        </p>
+
+        <div class="garage-card-bottom">
+
+            <strong>
+                ${formatPrice(vehicle.price)}
+            </strong>
+
+            <button
+                type="button"
+                class="garage-compare-button"
+            >
+                ⇄ Compare
+            </button>
+
+        </div>
+
+    </div>
+
+`;
+
+const removeButton =
+    card.querySelector(
+        ".garage-remove-button"
+    );
+
+removeButton.addEventListener(
+    "click",
+    () => {
+
+        removeFavouriteFromGarage(
+            vehicle.id
+        );
+
+    }
+);
+
+const compareButton =
+    card.querySelector(
+        ".garage-compare-button"
+    );
+
+compareButton.addEventListener(
+    "click",
+    () => {
+
+        addToComparison(vehicle);
+
+    }
+);
+
+return card;
+
+}
+
+/* =========================================================
+22. REMOVE FAVOURITE FROM GARAGE
+========================================================= */
+
+function removeFavouriteFromGarage(
+vehicleId
+) {
+
+let favourites = getStorage(
+    CHIPICARSKE.storage.favourites
+);
+
+const vehicle = favourites.find(
+    item => item.id === vehicleId
+);
+
+favourites = favourites.filter(
+    item => item.id !== vehicleId
+);
+
+saveStorage(
+    CHIPICARSKE.storage.favourites,
+    favourites
+);
+
+updateFavouriteCount();
+updateGaragePreview();
+renderGaragePage();
+
+showNotification(
+    vehicle
+        ? `${vehicle.name} removed from your garage.`
+        : "Vehicle removed from your garage.",
+    "info"
+);
+
+}
+
+/* =========================================================
+23. CLEAR GARAGE
+========================================================= */
+
+function initializeGarageActions() {
+
+const clearButton =
+    document.getElementById(
+        "clearGarageButton"
+    );
+
+if (!clearButton) {
+    return;
+}
+
+if (clearButton.dataset.initialized) {
+    return;
+}
+
+clearButton.dataset.initialized = "true";
+
+clearButton.addEventListener(
+    "click",
+    () => {
+
+        const favourites = getStorage(
+            CHIPICARSKE.storage.favourites
+        );
+
+        if (favourites.length === 0) {
+
+            showNotification(
+                "Your garage is already empty.",
+                "info"
+            );
+
+            return;
+        }
+
+        const confirmed = confirm(
+            "Are you sure you want to remove all saved vehicles?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        saveStorage(
+            CHIPICARSKE.storage.favourites,
+            []
+        );
+
+        updateFavouriteCount();
+        updateGaragePreview();
+        renderGaragePage();
+
+        showNotification(
+            "Your garage has been cleared.",
+            "success"
+        );
+
+    }
+);
+
+}
+
+/* =========================================================
+24. PRICE FORMATTER
+========================================================= */
+
+function formatPrice(price) {
+
+const amount =
+    Number(price) || 0;
+
+if (amount >= 1000000) {
+
+    return (
+        "KSh " +
+        (amount / 1000000)
+            .toFixed(1)
+            .replace(".0", "") +
+        "M"
+    );
+
+}
+
+if (amount >= 1000) {
+
+    return (
+        "KSh " +
+        Math.round(amount / 1000) +
+        "K"
+    );
+
+}
+
+return (
+    "KSh " +
+    amount.toLocaleString()
+);
+
+}
+
+/* =========================================================
+25. NAVIGATION
+========================================================= */
 
 function initializeNavigation() {
 
-    /*
-       Browse Cars
-    */
+/* Browse Cars */
 
-    document
-        .querySelectorAll(
-            ".hero .primary-button"
-        )
-        .forEach(function (button) {
+document
+    .querySelectorAll(
+        ".hero .primary-button"
+    )
+    .forEach(button => {
 
-            if (
-                button.textContent
-                    .toLowerCase()
-                    .includes("browse")
-            ) {
+        if (
+            button.dataset.navigationInitialized
+        ) {
+            return;
+        }
 
-                button.addEventListener(
-                    "click",
-                    function () {
+        if (
+            button.textContent
+                .toLowerCase()
+                .includes("browse")
+        ) {
 
-                        document
-                            .getElementById(
-                                "browse"
-                            )
-                            ?.scrollIntoView({
-                                behavior:
-                                    "smooth"
-                            });
+            button.dataset.navigationInitialized =
+                "true";
+
+            button.addEventListener(
+                "click",
+                event => {
+
+                    const browse =
+                        document.getElementById(
+                            "browse"
+                        );
+
+                    if (browse) {
+
+                        event.preventDefault();
+
+                        browse.scrollIntoView({
+                            behavior: "smooth"
+                        });
 
                     }
-                );
-
-            }
-
-        });
-
-
-    /*
-       Hero Sell button
-    */
-
-    document
-        .querySelectorAll(
-            ".hero .secondary-button"
-        )
-        .forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    document
-                        .getElementById(
-                            "sell"
-                        )
-                        ?.scrollIntoView({
-                            behavior:
-                                "smooth"
-                        });
 
                 }
             );
 
-        });
+        }
+
+    });
 
 
-    /*
-       Sell My Car navigation button
-    */
+/* Hero Sell Button */
 
-    document
-        .querySelectorAll(
-            ".sell-button"
-        )
-        .forEach(function (button) {
+document
+    .querySelectorAll(
+        ".hero .secondary-button"
+    )
+    .forEach(button => {
 
-            button.addEventListener(
-                "click",
-                function () {
+        if (
+            button.dataset.navigationInitialized
+        ) {
+            return;
+        }
 
-                    document
-                        .getElementById(
-                            "sell"
-                        )
-                        ?.scrollIntoView({
-                            behavior:
-                                "smooth"
-                        });
+        button.dataset.navigationInitialized =
+            "true";
 
-                }
-            );
-
-        });
-
-
-    /*
-       Favourite button
-    */
-
-    const favouriteButton =
-        document.querySelector(
-            ".favourite-button"
-        );
-
-
-    if (favouriteButton) {
-
-        favouriteButton.addEventListener(
+        button.addEventListener(
             "click",
-            function () {
+            event => {
 
-                const garage =
+                const sell =
                     document.getElementById(
-                        "garage"
+                        "sell"
                     );
 
+                if (sell) {
 
-                if (garage) {
+                    event.preventDefault();
 
-                    garage.scrollIntoView({
-                        behavior:
-                            "smooth"
+                    sell.scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* Sell My Car */
+
+document
+    .querySelectorAll(".sell-button")
+    .forEach(button => {
+
+        if (
+            button.dataset.navigationInitialized
+        ) {
+            return;
+        }
+
+        button.dataset.navigationInitialized =
+            "true";
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                const sell =
+                    document.getElementById(
+                        "sell"
+                    );
+
+                if (sell) {
+
+                    event.preventDefault();
+
+                    sell.scrollIntoView({
+                        behavior: "smooth"
                     });
 
                 } else {
 
                     window.location.href =
-                        "garage.html";
+                        "sell.html";
 
                 }
 
             }
         );
 
-    }
+    });
 
 
-    /*
-       Compare section
-    */
+/* Favourite Navigation */
 
-    document
-        .querySelectorAll(
-            ".Feature-selection .primary-button"
-        )
-        .forEach(function (button) {
+const favouriteButton =
+    document.querySelector(
+        ".favourite-button"
+    );
 
-            button.addEventListener(
-                "click",
-                function () {
+if (favouriteButton) {
 
-                    window.location.href =
-                        "compare.html";
+    favouriteButton.addEventListener(
+        "click",
+        () => {
 
-                }
-            );
+            const garage =
+                document.getElementById(
+                    "garage"
+                );
 
-        });
+            if (garage) {
+
+                garage.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            } else {
+
+                window.location.href =
+                    "garage.html";
+
+            }
+
+        }
+    );
 
 }
 
 
+/* Compare Navigation */
+
+document
+    .querySelectorAll(
+        ".Feature-selection .primary-button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "compare.html";
+
+            }
+        );
+
+    });
+
+}
+
 /* =========================================================
-   21. CONTACT FORM
-   ========================================================= */
+26. CONTACT FORM
+========================================================= */
 
 function initializeContactForm() {
 
-    const form =
-        document.getElementById(
-            "contactForm"
-        );
+const form =
+    document.getElementById(
+        "contactForm"
+    );
 
+if (!form) {
+    return;
+}
 
-    if (!form) return;
+if (form.dataset.initialized) {
+    return;
+}
 
+form.dataset.initialized = "true";
 
-    form.addEventListener(
-        "submit",
-        function (event) {
+form.addEventListener(
+    "submit",
+    event => {
 
-            event.preventDefault();
+        event.preventDefault();
 
+        const name =
+            document.getElementById(
+                "name"
+            )?.value.trim() || "";
 
-            const name =
-                document.getElementById(
-                    "name"
-                )?.value.trim();
+        const email =
+            document.getElementById(
+                "email"
+            )?.value.trim() || "";
 
+        const subject =
+            document.getElementById(
+                "subject"
+            )?.value.trim() || "";
 
-            const email =
-                document.getElementById(
-                    "email"
-                )?.value.trim();
+        const message =
+            document.getElementById(
+                "message"
+            )?.value.trim() || "";
 
+        const feedback =
+            document.getElementById(
+                "contactMessage"
+            );
 
-            const subject =
-                document.getElementById(
-                    "subject"
-                )?.value;
-
-
-            const message =
-                document.getElementById(
-                    "message"
-                )?.value.trim();
-
-
-            const feedback =
-                document.getElementById(
-                    "contactMessage"
-                );
-
-
-            if (
-                !name ||
-                !email ||
-                !message
-            ) {
-
-                if (feedback) {
-
-                    feedback.textContent =
-                        "Please complete all required fields.";
-
-                    feedback.className =
-                        "contact-message error";
-
-                }
-
-
-                showNotification(
-                    "Please complete the required fields.",
-                    "warning"
-                );
-
-
-                return;
-
-            }
-
+        if (
+            !name ||
+            !email ||
+            !message
+        ) {
 
             if (feedback) {
 
                 feedback.textContent =
-                    `Thanks ${name}! Your message has been received.`;
+                    "Please complete all required fields.";
 
                 feedback.className =
-                    "contact-message success";
+                    "contact-message error";
 
             }
 
-
             showNotification(
-                "Message sent successfully!",
-                "success"
+                "Please complete the required fields.",
+                "warning"
             );
 
+            return;
+        }
 
-            form.reset();
+        if (!isValidEmail(email)) {
+
+            showNotification(
+                "Please enter a valid email address.",
+                "warning"
+            );
+
+            return;
+        }
+
+        const contactMessage = {
+
+            id:
+                "message-" +
+                Date.now(),
+
+            name,
+
+            email,
+
+            subject,
+
+            message,
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+        const messages =
+            getStorage(
+                CHIPICARSKE.storage.messages
+            );
+
+        messages.push(
+            contactMessage
+        );
+
+        saveStorage(
+            CHIPICARSKE.storage.messages,
+            messages
+        );
+
+        if (feedback) {
+
+            feedback.textContent =
+                `Thanks ${name}! Your message has been received.`;
+
+            feedback.className =
+                "contact-message success";
 
         }
-    );
+
+        showNotification(
+            "Message sent successfully!",
+            "success"
+        );
+
+        form.reset();
+
+    }
+);
 
 }
 
+/* =========================================================
+27. CONTACT PAGE
+========================================================= */
+
+function initializeContactPage() {
+
+const form =
+    document.getElementById(
+        "contactForm"
+    );
+
+const message =
+    document.getElementById(
+        "contactMessage"
+    );
+
+const counter =
+    document.getElementById(
+        "messageCounter"
+    );
+
+const formMessage =
+    document.getElementById(
+        "contactFormMessage"
+    );
+
+if (!form || !message) {
+    return;
+}
+
+/* Message Counter */
+
+if (counter) {
+
+    const updateCounter = () => {
+
+        counter.textContent =
+            `${message.value.length} / 500 characters`;
+
+    };
+
+    message.addEventListener(
+        "input",
+        updateCounter
+    );
+
+    updateCounter();
+
+}
+
+/* Dedicated Contact Form */
+
+if (
+    form.dataset.contactPageInitialized
+) {
+    return;
+}
+
+form.dataset.contactPageInitialized =
+    "true";
+
+form.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById(
+                "contactName"
+            )?.value.trim() || "";
+
+        const email =
+            document.getElementById(
+                "contactEmail"
+            )?.value.trim() || "";
+
+        const phone =
+            document.getElementById(
+                "contactPhone"
+            )?.value.trim() || "";
+
+        const subject =
+            document.getElementById(
+                "contactSubject"
+            )?.value.trim() || "";
+
+        const messageText =
+            message.value.trim();
+
+        if (
+            !name ||
+            !email ||
+            !subject ||
+            !messageText
+        ) {
+
+            showContactMessage(
+                "Please complete all required fields.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+
+            showContactMessage(
+                "Please enter a valid email address.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (
+            messageText.length < 10
+        ) {
+
+            showContactMessage(
+                "Please provide a little more detail in your message.",
+                "error"
+            );
+
+            return;
+        }
+
+        const contactMessage = {
+
+            id:
+                "message-" +
+                Date.now(),
+
+            name,
+
+            email,
+
+            phone,
+
+            subject,
+
+            message:
+                messageText,
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+        const savedMessages =
+            getStorage(
+                CHIPICARSKE.storage.messages
+            );
+
+        savedMessages.push(
+            contactMessage
+        );
+
+        saveStorage(
+            CHIPICARSKE.storage.messages,
+            savedMessages
+        );
+
+        showContactMessage(
+            `✓ Thanks ${name}! Your message has been received. We'll get back to you soon.`,
+            "success"
+        );
+
+        form.reset();
+
+        if (counter) {
+            counter.textContent =
+                "0 / 500 characters";
+        }
+
+        showNotification(
+            "Message sent successfully!",
+            "success"
+        );
+
+    }
+);
+
+}
 
 /* =========================================================
-   22. SCROLL REVEAL
-   ========================================================= */
+28. CONTACT MESSAGE DISPLAY
+========================================================= */
+
+function showContactMessage(
+text,
+type
+) {
+
+const formMessage =
+    document.getElementById(
+        "contactFormMessage"
+    );
+
+if (!formMessage) {
+    return;
+}
+
+formMessage.textContent =
+    text;
+
+formMessage.className =
+    `contact-form-message ${type}`;
+
+formMessage.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+});
+
+}
+
+/* =========================================================
+29. EMAIL VALIDATION
+========================================================= */
+
+function isValidEmail(email) {
+
+return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    .test(email);
+
+}
+
+/* =========================================================
+30. SCROLL REVEAL
+========================================================= */
 
 function initializeScrollEffects() {
 
-    const elements =
-        document.querySelectorAll(
-            ".car-card, " +
-            ".benefit-card, " +
-            ".brands span, " +
-            ".stats > div, " +
-            ".garage-preview, " +
-            ".contact-container > div"
-        );
+const elements =
+    document.querySelectorAll(
+        `
+        .car-card,
+        .vehicle-card,
+        .benefit-card,
+        .brands span,
+        .stats > div,
+        .garage-preview,
+        .contact-container > div
+        `
+    );
 
+if (!elements.length) {
+    return;
+}
 
-    if (!elements.length) return;
+elements.forEach(element => {
 
+    element.classList.add(
+        "scroll-reveal"
+    );
 
-    elements.forEach(
-        function (element) {
+});
 
-            element.classList.add(
-                "scroll-reveal"
-            );
+if (
+    !("IntersectionObserver" in window)
+) {
 
+    elements.forEach(element => {
+        element.classList.add("visible");
+    });
+
+    return;
+}
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (
+                    entry.isIntersecting
+                ) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
         }
     );
 
+elements.forEach(element => {
 
-    const observer =
-        new IntersectionObserver(
-            function (entries) {
+    observer.observe(element);
 
-                entries.forEach(
-                    function (entry) {
-
-                        if (
-                            entry.isIntersecting
-                        ) {
-
-                            entry.target.classList.add(
-                                "visible"
-                            );
-
-
-                            observer.unobserve(
-                                entry.target
-                            );
-
-                        }
-
-                    }
-                );
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-
-    elements.forEach(
-        function (element) {
-
-            observer.observe(
-                element
-            );
-
-        }
-    );
+});
 
 }
 
-
 /* =========================================================
-   23. ANIMATED STATISTICS
-   ========================================================= */
+31. ANIMATED STATISTICS
+========================================================= */
 
 function initializeAnimatedStats() {
 
-    const stats =
-        document.querySelectorAll(
-            ".stats h2"
-        );
+const stats =
+    document.querySelectorAll(
+        ".stats h2"
+    );
 
+if (!stats.length) {
+    return;
+}
 
-    if (!stats.length) return;
+const observer =
+    new IntersectionObserver(
+        entries => {
 
+            entries.forEach(entry => {
 
-    const observer =
-        new IntersectionObserver(
-            function (entries) {
+                if (
+                    !entry.isIntersecting
+                ) {
+                    return;
+                }
 
-                entries.forEach(
-                    function (entry) {
+                const element =
+                    entry.target;
 
-                        if (
-                            !entry.isIntersecting
-                        ) return;
+                if (
+                    element.dataset.animated
+                ) {
+                    return;
+                }
 
+                const original =
+                    element.textContent.trim();
 
-                        const element =
-                            entry.target;
+                const match =
+                    original.match(
+                        /[\d,]+/
+                    );
 
+                if (!match) {
+                    return;
+                }
 
-                        const original =
-                            element.textContent.trim();
+                const target =
+                    Number(
+                        match[0]
+                            .replace(/,/g, "")
+                    );
 
+                element.dataset.animated =
+                    "true";
 
-                        const match =
-                            original.match(
-                                /[\d,]+/
-                            );
-
-
-                        if (!match) return;
-
-
-                        const target =
-                            Number(
-                                match[0]
-                                    .replace(
-                                        /,/g,
-                                        ""
-                                    )
-                            );
-
-
-                        animateNumber(
-                            element,
-                            target,
-                            original
-                                .includes("+")
-                        );
-
-
-                        observer.unobserve(
-                            element
-                        );
-
-                    }
+                animateNumber(
+                    element,
+                    target,
+                    original.includes("+")
                 );
 
-            },
-            {
-                threshold: 0.5
-            }
-        );
+                observer.unobserve(
+                    element
+                );
 
+            });
 
-    stats.forEach(
-        function (stat) {
-
-            observer.observe(
-                stat
-            );
-
+        },
+        {
+            threshold: 0.5
         }
     );
 
+stats.forEach(stat => {
+
+    observer.observe(stat);
+
+});
+
 }
 
-
 /* =========================================================
-   24. NUMBER ANIMATION
-   ========================================================= */
+32. NUMBER ANIMATION
+========================================================= */
 
 function animateNumber(
-    element,
-    target,
-    plus
+element,
+target,
+plus = false
 ) {
 
-    let current = 0;
+let current = 0;
 
+const duration = 1200;
 
-    const duration = 1200;
+const start =
+    performance.now();
 
-    const start =
-        performance.now();
+function update(time) {
 
-
-    function update(time) {
-
-        const progress =
-            Math.min(
-                (time - start) /
+    const progress =
+        Math.min(
+            (time - start) /
                 duration,
-                1
-            );
+            1
+        );
 
+    const eased =
+        1 -
+        Math.pow(
+            1 - progress,
+            3
+        );
 
-        const eased =
-            1 -
-            Math.pow(
-                1 - progress,
-                3
-            );
+    current =
+        Math.floor(
+            target * eased
+        );
 
+    element.textContent =
+        current.toLocaleString() +
+        (plus ? "+" : "");
 
-        current =
-            Math.floor(
-                target * eased
-            );
+    if (progress < 1) {
 
-
-        element.textContent =
-            current.toLocaleString() +
-            (plus ? "+" : "");
-
-
-        if (
-            progress < 1
-        ) {
-
-            requestAnimationFrame(
-                update
-            );
-
-        }
+        requestAnimationFrame(
+            update
+        );
 
     }
 
+}
 
-    requestAnimationFrame(
-        update
-    );
+requestAnimationFrame(
+    update
+);
 
 }
 
-
 /* =========================================================
-   25. HERO EFFECTS
-   ========================================================= */
+33. HERO EFFECTS
+========================================================= */
 
 function initializeHeroEffects() {
 
-    const heroCar =
-        document.querySelector(
-            ".hero-car img"
-        );
-
-
-    if (!heroCar) return;
-
-
-    heroCar.addEventListener(
-        "mouseenter",
-        function () {
-
-            heroCar.classList.add(
-                "hero-car-active"
-            );
-
-        }
+const hero =
+    document.querySelector(
+        ".hero"
     );
 
-
-    heroCar.addEventListener(
-        "mouseleave",
-        function () {
-
-            heroCar.classList.remove(
-                "hero-car-active"
-            );
-
-        }
+const heroCar =
+    document.querySelector(
+        ".hero-car img"
     );
 
+if (!hero || !heroCar) {
+    return;
+}
 
-    /*
-       Subtle mouse movement
-    */
+/* Hover */
 
-    const hero =
-        document.querySelector(
-            ".hero"
+heroCar.addEventListener(
+    "mouseenter",
+    () => {
+
+        heroCar.classList.add(
+            "hero-car-active"
         );
 
+    }
+);
 
-    if (!hero) return;
+heroCar.addEventListener(
+    "mouseleave",
+    () => {
+
+        heroCar.classList.remove(
+            "hero-car-active"
+        );
+
+    }
+);
 
 
-    hero.addEventListener(
-        "mousemove",
-        function (event) {
+/* Mouse Movement */
 
-            const rect =
-                hero.getBoundingClientRect();
+hero.addEventListener(
+    "mousemove",
+    event => {
 
+        const rect =
+            hero.getBoundingClientRect();
 
-            const x =
-                (
-                    event.clientX -
-                    rect.left
-                ) /
+        const x =
+            (event.clientX -
+                rect.left) /
                 rect.width -
-                0.5;
+            0.5;
 
-
-            const y =
-                (
-                    event.clientY -
-                    rect.top
-                ) /
+        const y =
+            (event.clientY -
+                rect.top) /
                 rect.height -
-                0.5;
+            0.5;
+
+        heroCar.style.transform =
+            `translate(${x * 10}px, ${y * 10}px)`;
+
+    }
+);
 
 
-            heroCar.style.transform =
-                `
-                translate(
-                    ${x * 10}px,
-                    ${y * 10}px
-                )
-                `;
+hero.addEventListener(
+    "mouseleave",
+    () => {
 
-        }
-    );
+        heroCar.style.transform =
+            "";
 
-
-    hero.addEventListener(
-        "mouseleave",
-        function () {
-
-            heroCar.style.transform =
-                "";
-
-        }
-    );
+    }
+);
 
 }
 
-
 /* =========================================================
-   26. VEHICLE CARD EFFECTS
-   ========================================================= */
+34. VEHICLE CARD EFFECTS
+========================================================= */
 
 function initializeCardEffects() {
 
-    const cards =
-        document.querySelectorAll(
-            ".car-card, .vehicle-card"
-        );
+const cards =
+    document.querySelectorAll(
+        CHIPICARSKE.selectors.vehicleCards
+    );
 
+cards.forEach(card => {
 
-    cards.forEach(
-        function (card) {
+    card.addEventListener(
+        "mouseenter",
+        () => {
 
-            card.addEventListener(
-                "mouseenter",
-                function () {
-
-                    card.classList.add(
-                        "card-active"
-                    );
-
-                }
-            );
-
-
-            card.addEventListener(
-                "mouseleave",
-                function () {
-
-                    card.classList.remove(
-                        "card-active"
-                    );
-
-                }
+            card.classList.add(
+                "card-active"
             );
 
         }
     );
+
+    card.addEventListener(
+        "mouseleave",
+        () => {
+
+            card.classList.remove(
+                "card-active"
+            );
+
+        }
+    );
+
+});
 
 }
 
-
 /* =========================================================
-   27. NOTIFICATION SYSTEM
-   ========================================================= */
+35. NOTIFICATION SYSTEM
+========================================================= */
 
 function showNotification(
-    message,
-    type = "info"
+message,
+type = "info"
 ) {
 
-    const existing =
-        document.querySelector(
-            ".chipicars-notification"
+const existing =
+    document.querySelector(
+        ".chipicars-notification"
+    );
+
+if (existing) {
+    existing.remove();
+}
+
+const notification =
+    document.createElement("div");
+
+notification.className =
+    `chipicars-notification ${type}`;
+
+const icon =
+    type === "success"
+        ? "✓"
+        : type === "warning"
+            ? "!"
+            : "i";
+
+notification.innerHTML = `
+
+    <span class="notification-icon">
+        ${icon}
+    </span>
+
+    <span class="notification-text">
+        ${escapeHTML(message)}
+    </span>
+
+    <button
+        type="button"
+        class="notification-close"
+        aria-label="Close notification"
+    >
+        ×
+    </button>
+
+`;
+
+document.body.appendChild(
+    notification
+);
+
+requestAnimationFrame(() => {
+
+    notification.classList.add(
+        "show"
+    );
+
+});
+
+const closeButton =
+    notification.querySelector(
+        ".notification-close"
+    );
+
+closeButton.addEventListener(
+    "click",
+    () => {
+
+        removeNotification(
+            notification
         );
-
-
-    if (existing) {
-
-        existing.remove();
 
     }
+);
 
-
-    const notification =
-        document.createElement(
-            "div"
-        );
-
-
-    notification.className =
-        `chipicars-notification ${type}`;
-
-
-    const icon =
-        type === "success"
-            ? "✓"
-            : type === "warning"
-                ? "!"
-                : "i";
-
-
-    notification.innerHTML = `
-
-        <span class="notification-icon">
-            ${icon}
-        </span>
-
-        <span class="notification-text">
-            ${escapeHTML(message)}
-        </span>
-
-    `;
-
-
-    document.body.appendChild(
-        notification
-    );
-
-
-    requestAnimationFrame(
-        function () {
-
-            notification.classList.add(
-                "show"
-            );
-
-        }
-    );
-
-
+const timeout =
     setTimeout(
-        function () {
+        () => {
 
-            notification.classList.remove(
-                "show"
-            );
-
-
-            setTimeout(
-                function () {
-
-                    notification.remove();
-
-                },
-                300
+            removeNotification(
+                notification
             );
 
         },
         3500
     );
 
+notification.dataset.timeout =
+    timeout;
+
 }
 
+/* =========================================================
+36. REMOVE NOTIFICATION
+========================================================= */
+
+function removeNotification(
+notification
+) {
+
+if (!notification) {
+    return;
+}
+
+notification.classList.remove(
+    "show"
+);
+
+setTimeout(() => {
+
+    if (notification) {
+        notification.remove();
+    }
+
+}, 300);
+
+}
 
 /* =========================================================
-   28. ESCAPE HTML
-   ========================================================= */
+37. ESCAPE HTML
+========================================================= */
 
 function escapeHTML(value) {
 
-    return String(value || "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
-
 
 /* =========================================================
-   29. GLOBAL FUNCTIONS
-   ========================================================= */
+38. SELL PAGE
+========================================================= */
 
-window.addToComparison =
-    addToComparison;
+function initializeSellPage() {
 
+const form =
+    document.getElementById(
+        "sellCarForm"
+    );
 
-window.removeFromComparison =
-    removeFromComparison;
+if (!form) {
+    return;
+}
 
+populateYears();
+setupSellPreview();
+setupSellForm();
 
-window.clearComparison =
-    clearComparison;
-
-
-window.showNotification =
-    showNotification;
-
+}
 
 /* =========================================================
-   30. READY
-   ========================================================= */
-
-console.log(
-    "🚘 ChipicarsKE is ready."
-);
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        renderGaragePage();
-
-        initializeGarageActions();
-
-    }
-);
-
-
-/* =====================================================
-   RENDER GARAGE
-   ===================================================== */
-
-function renderGaragePage() {
-
-    const garageGrid =
-        document.getElementById(
-            "garageGrid"
-        );
-
-    const emptyGarage =
-        document.getElementById(
-            "garageEmpty"
-        );
-
-    const subtitle =
-        document.getElementById(
-            "garageSubtitle"
-        );
-
-
-    if (!garageGrid) return;
-
-
-    const favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
-        );
-
-
-    garageGrid.innerHTML = "";
-
-
-    if (
-        favourites.length === 0
-    ) {
-
-        emptyGarage.style.display =
-            "flex";
-
-        subtitle.textContent =
-            "You haven't saved any vehicles yet.";
-
-        return;
-
-    }
-
-
-    emptyGarage.style.display =
-        "none";
-
-
-    subtitle.textContent =
-        `${favourites.length} vehicle${favourites.length === 1 ? "" : "s"} saved in your garage.`;
-
-
-    favourites.forEach(
-        function (vehicle) {
-
-            const card =
-                createGarageCard(
-                    vehicle
-                );
-
-
-            garageGrid.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   CREATE GARAGE CARD
-   ===================================================== */
-
-function createGarageCard(
-    vehicle
-) {
-
-    const card =
-        document.createElement(
-            "article"
-        );
-
-
-    card.className =
-        "garage-car-card";
-
-
-    card.innerHTML = `
-
-        <div class="garage-car-image">
-
-            <img
-                src="${escapeHTML(vehicle.image)}"
-                alt="${escapeHTML(vehicle.name)}"
-                loading="lazy"
-            >
-
-            <button
-                type="button"
-                class="garage-remove-button"
-                aria-label="Remove ${escapeHTML(vehicle.name)}"
-            >
-                ♥
-            </button>
-
-        </div>
-
-
-        <div class="garage-car-info">
-
-            <span class="garage-location">
-                📍 ${escapeHTML(vehicle.location)}
-            </span>
-
-            <h3>
-                ${escapeHTML(vehicle.name)}
-            </h3>
-
-            <p class="garage-specs">
-
-                ${escapeHTML(vehicle.year || "Year N/A")}
-
-                ${vehicle.engine
-                    ? ` • ${escapeHTML(vehicle.engine)}`
-                    : ""
-                }
-
-                ${vehicle.fuel
-                    ? ` • ${escapeHTML(vehicle.fuel)}`
-                    : ""
-                }
-
-                ${vehicle.transmission
-                    ? ` • ${escapeHTML(vehicle.transmission)}`
-                    : ""
-                }
-
-            </p>
-
-
-            <div class="garage-card-bottom">
-
-                <strong>
-                    ${formatPrice(vehicle.price)}
-                </strong>
-
-                <button
-                    type="button"
-                    class="garage-compare-button"
-                >
-                    ⇄ Compare
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    /* =================================================
-       REMOVE BUTTON
-       ================================================= */
-
-    const removeButton =
-        card.querySelector(
-            ".garage-remove-button"
-        );
-
-
-    removeButton.addEventListener(
-        "click",
-        function () {
-
-            removeFavouriteFromGarage(
-                vehicle.id
-            );
-
-        }
-    );
-
-
-    /* =================================================
-       COMPARE BUTTON
-       ================================================= */
-
-    const compareButton =
-        card.querySelector(
-            ".garage-compare-button"
-        );
-
-
-    compareButton.addEventListener(
-        "click",
-        function () {
-
-            addToComparison(
-                vehicle
-            );
-
-        }
-    );
-
-
-    return card;
-
-}
-
-
-/* =====================================================
-   REMOVE FAVOURITE
-   ===================================================== */
-
-function removeFavouriteFromGarage(
-    vehicleId
-) {
-
-    let favourites =
-        getStorage(
-            CHIPICARSKE.storage.favourites
-        );
-
-
-    const vehicle =
-        favourites.find(
-            function (item) {
-
-                return (
-                    item.id ===
-                    vehicleId
-                );
-
-            }
-        );
-
-
-    favourites =
-        favourites.filter(
-            function (item) {
-
-                return (
-                    item.id !==
-                    vehicleId
-                );
-
-            }
-        );
-
-
-    saveStorage(
-        CHIPICARSKE.storage.favourites,
-        favourites
-    );
-
-
-    updateFavouriteCount();
-
-
-    renderGaragePage();
-
-
-    showNotification(
-        vehicle
-            ? `${vehicle.name} removed from your garage.`
-            : "Vehicle removed from your garage.",
-        "info"
-    );
-
-}
-
-
-/* =====================================================
-   CLEAR GARAGE
-   ===================================================== */
-
-function initializeGarageActions() {
-
-    const clearButton =
-        document.getElementById(
-            "clearGarageButton"
-        );
-
-
-    if (!clearButton) return;
-
-
-    clearButton.addEventListener(
-        "click",
-        function () {
-
-            const favourites =
-                getStorage(
-                    CHIPICARSKE.storage.favourites
-                );
-
-
-            if (
-                favourites.length === 0
-            ) {
-
-                showNotification(
-                    "Your garage is already empty.",
-                    "info"
-                );
-
-                return;
-
-            }
-
-
-            const confirmed =
-                confirm(
-                    "Are you sure you want to remove all saved vehicles?"
-                );
-
-
-            if (!confirmed) return;
-
-
-            saveStorage(
-                CHIPICARSKE.storage.favourites,
-                []
-            );
-
-
-            updateFavouriteCount();
-
-
-            renderGaragePage();
-
-
-            showNotification(
-                "Your garage has been cleared.",
-                "success"
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   PRICE FORMATTER
-   ===================================================== */
-
-function formatPrice(
-    price
-) {
-
-    const amount =
-        Number(price) || 0;
-
-
-    if (
-        amount >= 1000000
-    ) {
-
-        return (
-            "KSh " +
-            (amount / 1000000)
-                .toFixed(1)
-                .replace(
-                    ".0",
-                    ""
-                ) +
-            "M"
-        );
-
-    }
-
-
-    if (
-        amount >= 1000
-    ) {
-
-        return (
-            "KSh " +
-            Math.round(
-                amount / 1000
-            ) +
-            "K"
-        );
-
-    }
-
-
-    return (
-        "KSh " +
-        amount.toLocaleString()
-    );
-
-}
- /*=====================================================
-     SELL PAGE JAVASCRIPT
-     ===================================================== */
-
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        populateYears();
-
-        setupSellPreview();
-
-        setupSellForm();
-
-    }
-);
-
-
-/* =====================================================
-   YEAR DROPDOWN
-   ===================================================== */
+39. YEAR DROPDOWN
+========================================================= */
 
 function populateYears() {
 
-    const yearSelect =
-        document.getElementById(
-            "sellYear"
+const yearSelect =
+    document.getElementById(
+        "sellYear"
+    );
+
+if (!yearSelect) {
+    return;
+}
+
+if (yearSelect.options.length > 1) {
+    return;
+}
+
+const currentYear =
+    new Date().getFullYear();
+
+for (
+    let year = currentYear;
+    year >= 1990;
+    year--
+) {
+
+    const option =
+        document.createElement(
+            "option"
         );
 
-    const currentYear =
-        new Date().getFullYear();
+    option.value =
+        year;
 
+    option.textContent =
+        year;
 
-    for (
-        let year = currentYear;
-        year >= 1990;
-        year--
-    ) {
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-        option.value = year;
-
-        option.textContent = year;
-
-        yearSelect.appendChild(
-            option
-        );
-
-    }
+    yearSelect.appendChild(
+        option
+    );
 
 }
 
+}
 
-/* =====================================================
-   LIVE LISTING PREVIEW
-   ===================================================== */
+/* =========================================================
+40. SELL PREVIEW
+========================================================= */
 
 function setupSellPreview() {
 
-    const fields = {
+const fields = [
 
-        make:
-            document.getElementById(
-                "sellMake"
-            ),
+    "sellMake",
+    "sellModel",
+    "sellYear",
+    "sellEngine",
+    "sellFuel",
+    "sellTransmission",
+    "sellLocation",
+    "sellPrice",
+    "sellImage"
 
-        model:
-            document.getElementById(
-                "sellModel"
-            ),
+];
 
-        year:
-            document.getElementById(
-                "sellYear"
-            ),
+const availableFields =
+    fields
+        .map(id =>
+            document.getElementById(id)
+        )
+        .filter(Boolean);
 
-        engine:
-            document.getElementById(
-                "sellEngine"
-            ),
+if (!availableFields.length) {
+    return;
+}
 
-        fuel:
-            document.getElementById(
-                "sellFuel"
-            ),
+availableFields.forEach(field => {
 
-        transmission:
-            document.getElementById(
-                "sellTransmission"
-            ),
-
-        location:
-            document.getElementById(
-                "sellLocation"
-            ),
-
-        price:
-            document.getElementById(
-                "sellPrice"
-            ),
-
-        image:
-            document.getElementById(
-                "sellImage"
-            )
-
-    };
-
-
-    Object.values(fields).forEach(
-        function (field) {
-
-            field.addEventListener(
-                "input",
-                updatePreview
-            );
-
-            field.addEventListener(
-                "change",
-                updatePreview
-            );
-
-        }
+    field.addEventListener(
+        "input",
+        updatePreview
     );
 
+    field.addEventListener(
+        "change",
+        updatePreview
+    );
 
-    updatePreview();
+});
+
+updatePreview();
 
 }
 
-
-/* =====================================================
-   UPDATE PREVIEW
-   ===================================================== */
+/* =========================================================
+41. UPDATE SELL PREVIEW
+========================================================= */
 
 function updatePreview() {
 
-    const make =
-        document.getElementById(
-            "sellMake"
-        ).value;
+const make =
+    document.getElementById(
+        "sellMake"
+    )?.value || "";
 
-    const model =
-        document.getElementById(
-            "sellModel"
-        ).value;
+const model =
+    document.getElementById(
+        "sellModel"
+    )?.value || "";
 
-    const year =
-        document.getElementById(
-            "sellYear"
-        ).value;
+const year =
+    document.getElementById(
+        "sellYear"
+    )?.value || "";
 
-    const engine =
-        document.getElementById(
-            "sellEngine"
-        ).value;
+const engine =
+    document.getElementById(
+        "sellEngine"
+    )?.value || "";
 
-    const fuel =
-        document.getElementById(
-            "sellFuel"
-        ).value;
+const fuel =
+    document.getElementById(
+        "sellFuel"
+    )?.value || "";
 
-    const transmission =
-        document.getElementById(
-            "sellTransmission"
-        ).value;
+const transmission =
+    document.getElementById(
+        "sellTransmission"
+    )?.value || "";
 
-    const location =
-        document.getElementById(
-            "sellLocation"
-        ).value;
+const location =
+    document.getElementById(
+        "sellLocation"
+    )?.value || "";
 
-    const price =
-        document.getElementById(
-            "sellPrice"
-        ).value;
+const price =
+    document.getElementById(
+        "sellPrice"
+    )?.value || "";
 
-    const image =
-        document.getElementById(
-            "sellImage"
-        ).value;
+const image =
+    document.getElementById(
+        "sellImage"
+    )?.value || "";
 
+const previewName =
+    document.getElementById(
+        "previewName"
+    );
 
-    const previewName =
-        document.getElementById(
-            "previewName"
-        );
+const previewSpecs =
+    document.getElementById(
+        "previewSpecs"
+    );
 
-    const previewSpecs =
-        document.getElementById(
-            "previewSpecs"
-        );
+const previewLocation =
+    document.getElementById(
+        "previewLocation"
+    );
 
-    const previewLocation =
-        document.getElementById(
-            "previewLocation"
-        );
+const previewPrice =
+    document.getElementById(
+        "previewPrice"
+    );
 
-    const previewPrice =
-        document.getElementById(
-            "previewPrice"
-        );
+const previewImage =
+    document.getElementById(
+        "previewImage"
+    );
 
-    const previewImage =
-        document.getElementById(
-            "previewImage"
-        );
-
+if (previewName) {
 
     previewName.textContent =
         make && model
             ? `${make} ${model}`
             : "Your Vehicle";
 
+}
+
+if (previewSpecs) {
 
     previewSpecs.textContent =
         [
@@ -2685,22 +2539,30 @@ function updatePreview() {
             transmission
         ]
         .filter(Boolean)
-        .join(" • ")
-        ||
+        .join(" • ") ||
         "Year • Engine • Fuel • Transmission";
 
+}
+
+if (previewLocation) {
 
     previewLocation.textContent =
         location
             ? `📍 ${location}`
             : "📍 Location";
 
+}
+
+if (previewPrice) {
 
     previewPrice.textContent =
         price
             ? formatSellPrice(price)
             : "KSh 0";
 
+}
+
+if (previewImage) {
 
     if (image) {
 
@@ -2717,412 +2579,490 @@ function updatePreview() {
 
 }
 
+}
 
-/* =====================================================
-   PRICE FORMAT
-   ===================================================== */
+/* =========================================================
+42. SELL PRICE FORMAT
+========================================================= */
 
-function formatSellPrice(
-    value
-) {
+function formatSellPrice(value) {
 
-    const number =
-        Number(value);
+const number =
+    Number(value) || 0;
 
-
-    if (
-        number >= 1000000
-    ) {
-
-        return (
-            "KSh " +
-            (number / 1000000)
-                .toFixed(1)
-                .replace(
-                    ".0",
-                    ""
-                ) +
-            "M"
-        );
-
-    }
-
+if (number >= 1000000) {
 
     return (
         "KSh " +
-        number.toLocaleString()
+        (number / 1000000)
+            .toFixed(1)
+            .replace(".0", "") +
+        "M"
     );
 
 }
 
+return (
+    "KSh " +
+    number.toLocaleString()
+);
 
-/* =====================================================
-   FORM SUBMISSION
-   ===================================================== */
+}
+
+/* =========================================================
+43. SELL FORM
+========================================================= */
 
 function setupSellForm() {
 
-    const form =
-        document.getElementById(
-            "sellCarForm"
+const form =
+    document.getElementById(
+        "sellCarForm"
+    );
+
+if (!form) {
+    return;
+}
+
+if (form.dataset.initialized) {
+    return;
+}
+
+form.dataset.initialized =
+    "true";
+
+form.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const getValue =
+            id =>
+                document.getElementById(
+                    id
+                )?.value.trim() || "";
+
+        const listing = {
+
+            id:
+                "listing-" +
+                Date.now(),
+
+            make:
+                getValue("sellMake"),
+
+            model:
+                getValue("sellModel"),
+
+            year:
+                getValue("sellYear"),
+
+            mileage:
+                getValue("sellMileage"),
+
+            engine:
+                getValue("sellEngine"),
+
+            fuel:
+                getValue("sellFuel"),
+
+            transmission:
+                getValue("sellTransmission"),
+
+            drive:
+                getValue("sellDrive"),
+
+            price:
+                Number(
+                    getValue("sellPrice")
+                ) || 0,
+
+            location:
+                getValue("sellLocation"),
+
+            description:
+                getValue("sellDescription"),
+
+            image:
+                getValue("sellImage"),
+
+            seller: {
+
+                name:
+                    getValue("sellerName"),
+
+                phone:
+                    getValue("sellerPhone"),
+
+                email:
+                    getValue("sellerEmail")
+
+            },
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+        saveListing(
+            listing
         );
 
-
-    form.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            const listing = {
-
-                id:
-                    "listing-" +
-                    Date.now(),
-
-                make:
-                    document.getElementById(
-                        "sellMake"
-                    ).value,
-
-                model:
-                    document.getElementById(
-                        "sellModel"
-                    ).value,
-
-                year:
-                    document.getElementById(
-                        "sellYear"
-                    ).value,
-
-                mileage:
-                    document.getElementById(
-                        "sellMileage"
-                    ).value,
-
-                engine:
-                    document.getElementById(
-                        "sellEngine"
-                    ).value,
-
-                fuel:
-                    document.getElementById(
-                        "sellFuel"
-                    ).value,
-
-                transmission:
-                    document.getElementById(
-                        "sellTransmission"
-                    ).value,
-
-                drive:
-                    document.getElementById(
-                        "sellDrive"
-                    ).value,
-
-                price:
-                    document.getElementById(
-                        "sellPrice"
-                    ).value,
-
-                location:
-                    document.getElementById(
-                        "sellLocation"
-                    ).value,
-
-                description:
-                    document.getElementById(
-                        "sellDescription"
-                    ).value,
-
-                image:
-                    document.getElementById(
-                        "sellImage"
-                    ).value,
-
-                seller:
-                    {
-                        name:
-                            document.getElementById(
-                                "sellerName"
-                            ).value,
-
-                        phone:
-                            document.getElementById(
-                                "sellerPhone"
-                            ).value,
-
-                        email:
-                            document.getElementById(
-                                "sellerEmail"
-                            ).value
-                    },
-
-                createdAt:
-                    new Date().toISOString()
-
-            };
-
-
-            saveListing(
-                listing
+        const message =
+            document.getElementById(
+                "sellMessage"
             );
 
-
-            const message =
-                document.getElementById(
-                    "sellMessage"
-                );
-
+        if (message) {
 
             message.className =
                 "sell-message success";
 
-
             message.textContent =
                 "✓ Your vehicle listing has been created successfully!";
 
-
-            form.reset();
-
-
-            updatePreview();
-
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
         }
-    );
 
-}
-
-
-/* =====================================================
-   SAVE LISTING
-   ===================================================== */
-
-function saveListing(
-    listing
-) {
-
-    const listings =
-        JSON.parse(
-            localStorage.getItem(
-                "chipicarskeListings"
-            )
-        ) || [];
-
-
-    listings.push(
-        listing
-    );
-
-
-    localStorage.setItem(
-        "chipicarskeListings",
-        JSON.stringify(
-            listings
-        )
-    );
-
-}
-
-
-/*-- =====================================================
-CONTACT PAGE JAVASCRIPT
-===================================================== */
-
-
-
-document.addEventListener(
-"DOMContentLoaded",
-function () {
-
-initializeContactPage();
-
-}
-);
-
-function initializeContactPage() {
-
-const form =
-document.getElementById(
-"contactForm"
-)};
-
-const message =
-document.getElementById(
-"contactMessage"
-);
-
-const counter =
-document.getElementById(
-"messageCounter"
-);
-
-const formMessage =
-document.getElementById(
-"contactFormMessage"
-);
-
-/* ================================================
-MESSAGE COUNTER
-================================================ */
-
-message.addEventListener(
-"input",
-function () {
-
-const length =
-message.value.length;
-
-counter.textContent =
-`${length} / 500 characters`;
-
-}
-);
-
-/* ================================================
-   FORM SUBMISSION
-   ================================================ */
-
-form.addEventListener("submit", function (event) {
-
-    event.preventDefault();
-
-    const name =
-        document.getElementById("contactName").value.trim();
-
-    const email =
-        document.getElementById("contactEmail").value.trim();
-
-    const subject =
-        document.getElementById("contactSubject").value;
-
-    const messageText =
-        message.value.trim();
-
-
-    if (
-        !name ||
-        !email ||
-        !subject ||
-        !messageText
-    ) {
-
-        showContactMessage(
-            "Please complete all required fields.",
-            "error"
+        showNotification(
+            "Your vehicle listing has been created.",
+            "success"
         );
 
+        form.reset();
+
+        updatePreview();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+);
+
+}
+
+/* =========================================================
+44. SAVE LISTING
+========================================================= */
+
+function saveListing(listing) {
+
+const listings =
+    getStorage(
+        CHIPICARSKE.storage.listings
+    );
+
+listings.push(listing);
+
+saveStorage(
+    CHIPICARSKE.storage.listings,
+    listings
+);
+
+}
+
+/* =========================================================
+45. GLOBAL FUNCTIONS
+========================================================= */
+
+window.addToComparison =
+addToComparison;
+
+window.removeFromComparison =
+removeFromComparison;
+
+window.clearComparison =
+clearComparison;
+
+window.showNotification =
+showNotification;
+
+window.toggleFavourite =
+toggleFavourite;
+
+window.removeFavouriteFromGarage =
+removeFavouriteFromGarage;
+
+window.renderGaragePage =
+renderGaragePage;
+
+window.formatPrice =
+formatPrice;
+
+/* =========================================================
+END OF CHIPICARSKE MASTER JAVASCRIPT
+========================================================= */
+
+console.log(
+"🚘 ChipicarsKE Master JavaScript loaded successfully."
+);
+
+// ============================================================
+// CHIPICARSKE — COMPARISON PAGE
+// ============================================================
+
+function renderComparisonPage() {
+    const comparisonTable = document.getElementById("comparisonTableWrapper");
+    const motorcycleTable = document.getElementById("motorcycleComparisonTableWrapper");
+    const emptyState = document.getElementById("comparisonEmpty");
+    const selectors = document.getElementById("comparisonSelectors");
+
+    // If we're not on compare.html, stop
+    if (!comparisonTable && !motorcycleTable) {
         return;
     }
 
-
-    if (messageText.length < 10) {
-
-        showContactMessage(
-            "Please provide a little more detail in your message.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    showContactMessage(
-        `✓ Thanks ${name}! Your message has been received. We'll get back to you soon.`,
-        "success"
+    const carComparison = getStorage(CHIPICARSKE.storage.comparison);
+    const motorcycleComparison = getStorage(
+        CHIPICARSKE.storage.motorcycleComparison
     );
 
+    // --------------------------------------------------------
+    // RESET EVERYTHING
+    // --------------------------------------------------------
 
-    form.reset();
-
-    counter.textContent = "0 / 500 characters";
-
-});
-/* ========================================
-SAVE MESSAGE LOCALLY
-======================================== */
-
-const contactMessage = {
-
-id:
-"message-" +
-Date.now(),
-
-name:
-name,
-
-email:
-email,
-
-phone:
-document.getElementById(
-"contactPhone"
-).value.trim(),
-
-subject:
-subject,
-
-message:
-messageText,
-
-createdAt:
-new Date().toISOString()
-
-};
-
-const savedMessages =
-JSON.parse(
-localStorage.getItem(
-"chipicarskeContactMessages"
-)
-) || [];
-
-savedMessages.push(
-contactMessage
-);
-
-localStorage.setItem(
-"chipicarskeContactMessages",
-JSON.stringify(
-savedMessages
-)
-);
-
-/* ========================================
-   SUCCESS
-   ======================================== */
-
-showContactMessage(
-    `✓ Thanks ${name}! Your message has been received. We'll get back to you soon.`,
-    "success"
-);
-
-form.reset();
-
-counter.textContent = "0 / 500 characters";
-
-
-/* ========================================
-   SHOW CONTACT MESSAGE
-   ======================================== */
-
-function showContactMessage(text, type) {
-
-    formMessage.textContent = text;
-
-    formMessage.className =
-        `contact-form-message ${type}`;
-
-    formMessage.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
+    document.querySelectorAll("[data-compare]").forEach(cell => {
+        cell.textContent = "—";
     });
 
+    document.querySelectorAll("[data-motorcycle-compare]").forEach(cell => {
+        cell.textContent = "—";
+    });
+
+    for (let i = 0; i < 3; i++) {
+        const carHeader = document.getElementById(`compareHeader${i}`);
+        const bikeHeader = document.getElementById(`motorcycleHeader${i}`);
+
+        if (carHeader) {
+            carHeader.textContent = `Vehicle ${i + 1}`;
+        }
+
+        if (bikeHeader) {
+            bikeHeader.textContent = `Motorcycle ${i + 1}`;
+        }
+    }
+
+    // --------------------------------------------------------
+    // RENDER CAR COMPARISON
+    // --------------------------------------------------------
+
+    if (carComparison.length > 0) {
+        comparisonTable.style.display = "block";
+
+        carComparison.slice(0, 3).forEach((vehicle, index) => {
+
+            const values = {
+                name:
+                    vehicle.name ||
+                    `${vehicle.make || ""} ${vehicle.model || ""}`.trim() ||
+                    "Vehicle",
+
+                price:
+                    vehicle.price
+                        ? formatPrice(vehicle.price)
+                        : "—",
+
+                year:
+                    vehicle.year || "—",
+
+                mileage:
+                    vehicle.mileage || "—",
+
+                engine:
+                    vehicle.engine || "—",
+
+                fuel:
+                    vehicle.fuel || "—",
+
+                transmission:
+                    vehicle.transmission || "—",
+
+                location:
+                    vehicle.location || "—"
+            };
+
+            // Header
+            const header = document.getElementById(`compareHeader${index}`);
+
+            if (header) {
+                header.innerHTML = `
+                    <div class="compare-header-content">
+                        <strong>${escapeHTML(values.name)}</strong>
+                        <button
+                            type="button"
+                            class="compare-remove-button"
+                            onclick="removeComparisonVehicle('${vehicle.id}', 'car')"
+                        >
+                            ×
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Table cells
+            Object.keys(values).forEach(spec => {
+                const cell = document.querySelector(
+                    `[data-compare="${spec}"][data-slot="${index}"]`
+                );
+
+                if (cell) {
+                    cell.textContent = values[spec];
+                }
+            });
+        });
+    } else {
+        comparisonTable.style.display = "none";
+    }
+
+    // --------------------------------------------------------
+    // RENDER MOTORCYCLE COMPARISON
+    // --------------------------------------------------------
+
+    if (motorcycleComparison.length > 0) {
+        motorcycleTable.style.display = "block";
+
+        motorcycleComparison.slice(0, 3).forEach((vehicle, index) => {
+
+            const values = {
+                name:
+                    vehicle.name ||
+                    `${vehicle.make || ""} ${vehicle.model || ""}`.trim() ||
+                    "Motorcycle",
+
+                price:
+                    vehicle.price
+                        ? formatPrice(vehicle.price)
+                        : "—",
+
+                year:
+                    vehicle.year || "—",
+
+                mileage:
+                    vehicle.mileage || "—",
+
+                engine:
+                    vehicle.engine || "—",
+
+                fuel:
+                    vehicle.fuel || "—",
+
+                transmission:
+                    vehicle.transmission || "—",
+
+                location:
+                    vehicle.location || "—"
+            };
+
+            const header = document.getElementById(
+                `motorcycleHeader${index}`
+            );
+
+            if (header) {
+                header.innerHTML = `
+                    <div class="compare-header-content">
+                        <strong>${escapeHTML(values.name)}</strong>
+                        <button
+                            type="button"
+                            class="compare-remove-button"
+                            onclick="removeComparisonVehicle('${vehicle.id}', 'motorcycle')"
+                        >
+                            ×
+                        </button>
+                    </div>
+                `;
+            }
+
+            Object.keys(values).forEach(spec => {
+                const cell = document.querySelector(
+                    `[data-motorcycle-compare="${spec}"][data-slot="${index}"]`
+                );
+
+                if (cell) {
+                    cell.textContent = values[spec];
+                }
+            });
+        });
+    } else {
+        motorcycleTable.style.display = "none";
+    }
+
+    // --------------------------------------------------------
+    // EMPTY STATE
+    // --------------------------------------------------------
+
+    const hasCars = carComparison.length > 0;
+    const hasMotorcycles = motorcycleComparison.length > 0;
+
+    if (!hasCars && !hasMotorcycles) {
+        if (emptyState) {
+            emptyState.style.display = "block";
+        }
+
+        if (selectors) {
+            selectors.style.display = "grid";
+        }
+    } else {
+        if (emptyState) {
+            emptyState.style.display = "none";
+        }
+
+        if (selectors) {
+            selectors.style.display = "grid";
+        }
+    }
 }
+
+
+// ============================================================
+// REMOVE ONE VEHICLE FROM COMPARISON
+// ============================================================
+
+function removeComparisonVehicle(vehicleId, type = "car") {
+
+    const storageKey =
+        type === "motorcycle"
+            ? CHIPICARSKE.storage.motorcycleComparison
+            : CHIPICARSKE.storage.comparison;
+
+    let vehicles = getStorage(storageKey);
+
+    vehicles = vehicles.filter(vehicle => {
+        return String(vehicle.id) !== String(vehicleId);
+    });
+
+    saveStorage(storageKey, vehicles);
+
+    renderComparisonPage();
+    updateComparisonCount();
+
+    showNotification("Vehicle removed from comparison", "success");
+}
+
+
+// ============================================================
+// ESCAPE HTML
+// ============================================================
+
+function escapeHTML(value) {
+    const div = document.createElement("div");
+    div.textContent = value ?? "";
+    return div.innerHTML;
+}
+
+
+// ============================================================
+// INITIALIZE COMPARISON PAGE
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (
+        document.getElementById("comparisonTableWrapper") ||
+        document.getElementById("motorcycleComparisonTableWrapper")
+    ) {
+        renderComparisonPage();
+    }
+
+});
