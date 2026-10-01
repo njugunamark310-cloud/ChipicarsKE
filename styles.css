@@ -5375,3 +5375,14 @@ body.dark-mode .preview-note {
     background: #24191c;
     border-color: #4b292e;
 }
+
+body.dark-mode .contact-form-wrapper
+.form-group input,
+body.dark-mode .contact-form-wrapper
+.form-group select,
+body.dark-mode .contact-form-wrapper
+.form-group textarea {
+    background: #151c25;
+    border-color: #364352;
+    color: #f1f5f9;
+}
