@@ -5366,3 +5366,7 @@ body.dark-mode .hours-row span,
 body.dark-mode .faq-grid details p {
     color: #aeb8c4;
 }
+
+body.dark-mode .preview-info strong {
+    color: #f1f5f9;
+}
