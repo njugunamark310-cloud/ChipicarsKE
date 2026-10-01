@@ -5343,3 +5343,14 @@ body.dark-mode .sell-how,
 body.dark-mode .contact-faq {
     background: #151c25;
 }
+
+body.dark-mode .sell-steps article,
+body.dark-mode .contact-info-card,
+body.dark-mode .contact-form-wrapper,
+body.dark-mode .location-card,
+body.dark-mode .hours-card,
+body.dark-mode .contact-quick-links,
+body.dark-mode .faq-grid details {
+    background: #1c2530;
+    border-color: #2d3946;
+}
