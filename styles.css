@@ -5386,3 +5386,10 @@ body.dark-mode .contact-form-wrapper
     border-color: #364352;
     color: #f1f5f9;
 }
+
+body.dark-mode .contact-form-wrapper
+.form-group input::placeholder,
+body.dark-mode .contact-form-wrapper
+.form-group textarea::placeholder {
+    color: #7f8b99;
+}
