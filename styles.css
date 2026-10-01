@@ -5370,3 +5370,8 @@ body.dark-mode .faq-grid details p {
 body.dark-mode .preview-info strong {
     color: #f1f5f9;
 }
+
+body.dark-mode .preview-note {
+    background: #24191c;
+    border-color: #4b292e;
+}
