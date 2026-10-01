@@ -5331,3 +5331,107 @@ RESPONSIVE
 }
 
 }
+
+/* dark mode */
+
+body.dark-mode {
+    background: #0f141b;
+    color: #f1f5f9;
+}
+
+body.dark-mode .sell-how,
+body.dark-mode .contact-faq {
+    background: #151c25;
+}
+
+body.dark-mode .sell-steps article,
+body.dark-mode .contact-info-card,
+body.dark-mode .contact-form-wrapper,
+body.dark-mode .location-card,
+body.dark-mode .hours-card,
+body.dark-mode .contact-quick-links,
+body.dark-mode .faq-grid details {
+    background: #1c2530;
+    border-color: #2d3946;
+}
+
+body.dark-mode .preview-location,
+body.dark-mode .preview-info > p:not(.preview-location),
+body.dark-mode .sell-steps p,
+body.dark-mode .contact-hero-content > p,
+body.dark-mode .contact-info-card p,
+body.dark-mode .contact-form-intro,
+body.dark-mode .location-card > p,
+body.dark-mode .hours-row span,
+body.dark-mode .faq-grid details p {
+    color: #aeb8c4;
+}
+
+body.dark-mode .preview-info strong {
+    color: #f1f5f9;
+}
+
+body.dark-mode .preview-note {
+    background: #24191c;
+    border-color: #4b292e;
+}
+
+body.dark-mode .contact-form-wrapper
+.form-group input,
+body.dark-mode .contact-form-wrapper
+.form-group select,
+body.dark-mode .contact-form-wrapper
+.form-group textarea {
+    background: #151c25;
+    border-color: #364352;
+    color: #f1f5f9;
+}
+
+body.dark-mode .contact-form-wrapper
+.form-group input::placeholder,
+body.dark-mode .contact-form-wrapper
+.form-group textarea::placeholder {
+    color: #7f8b99;
+}
+
+body.dark-mode .map-placeholder {
+    background: linear-gradient(
+        135deg,
+        #26313d,
+        #1c2530
+    );
+
+    color: #f1f5f9;
+}
+
+body.dark-mode .map-placeholder span {
+    color: #aeb8c4;
+}
+
+
+
+body.dark-mode .contact-quick-links a {
+    color: #f1f5f9;
+}
+
+
+
+body.dark-mode .hours-row {
+    border-color: #2d3946;
+}
+
+
+
+body.dark-mode .sell-steps article > span {
+    background: #301c20;
+}
+
+
+
+body,
+body * {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
