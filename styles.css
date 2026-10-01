@@ -5354,3 +5354,15 @@ body.dark-mode .faq-grid details {
     background: #1c2530;
     border-color: #2d3946;
 }
+
+body.dark-mode .preview-location,
+body.dark-mode .preview-info > p:not(.preview-location),
+body.dark-mode .sell-steps p,
+body.dark-mode .contact-hero-content > p,
+body.dark-mode .contact-info-card p,
+body.dark-mode .contact-form-intro,
+body.dark-mode .location-card > p,
+body.dark-mode .hours-row span,
+body.dark-mode .faq-grid details p {
+    color: #aeb8c4;
+}
