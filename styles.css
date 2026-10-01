@@ -5338,3 +5338,8 @@ body.dark-mode {
     background: #0f141b;
     color: #f1f5f9;
 }
+
+body.dark-mode .sell-how,
+body.dark-mode .contact-faq {
+    background: #151c25;
+}
