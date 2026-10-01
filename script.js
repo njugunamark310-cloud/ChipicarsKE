@@ -3066,3 +3066,96 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+// ============================================================
+// CHIPICARSKE — DARK MODE
+// ============================================================
+
+function initializeDarkMode() {
+
+    const toggle =
+        document.getElementById("darkModeToggle");
+
+    // Stop if the button does not exist on this page
+    if (!toggle) {
+        return;
+    }
+
+    // Check if dark mode was previously selected
+    const savedTheme =
+        localStorage.getItem("chipicarsTheme");
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("dark-mode");
+
+        toggle.textContent =
+            "☀️ Light Mode";
+
+    } else {
+
+        toggle.textContent =
+            "🌙 Dark Mode";
+
+    }
+
+
+    // Listen for button clicks
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            // Add or remove dark-mode
+            document.body.classList.toggle(
+                "dark-mode"
+            );
+
+
+            // Check current state
+            const darkModeEnabled =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+
+            // Update button and save preference
+            if (darkModeEnabled) {
+
+                toggle.textContent =
+                    "☀️ Light Mode";
+
+                localStorage.setItem(
+                    "chipicarsTheme",
+                    "dark"
+                );
+
+            } else {
+
+                toggle.textContent =
+                    "🌙 Dark Mode";
+
+                localStorage.setItem(
+                    "chipicarsTheme",
+                    "light"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// INITIALIZE DARK MODE
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        initializeDarkMode();
+
+    }
+);
