@@ -5331,3 +5331,10 @@ RESPONSIVE
 }
 
 }
+
+/* dark mode */
+
+body.dark-mode {
+    background: #0f141b;
+    color: #f1f5f9;
+}
