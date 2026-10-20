@@ -5332,106 +5332,300 @@ RESPONSIVE
 
 }
 
-/* dark mode */
-
 body.dark-mode {
-    background: #0f141b;
-    color: #f1f5f9;
+    background-color: #0f141b !important;
+    color: #e8edf4 !important;
+    color-scheme: dark;
 }
 
-body.dark-mode .sell-how,
-body.dark-mode .contact-faq {
-    background: #151c25;
-}
-
-body.dark-mode .sell-steps article,
-body.dark-mode .contact-info-card,
-body.dark-mode .contact-form-wrapper,
-body.dark-mode .location-card,
-body.dark-mode .hours-card,
-body.dark-mode .contact-quick-links,
-body.dark-mode .faq-grid details {
-    background: #1c2530;
-    border-color: #2d3946;
-}
-
-body.dark-mode .preview-location,
-body.dark-mode .preview-info > p:not(.preview-location),
-body.dark-mode .sell-steps p,
-body.dark-mode .contact-hero-content > p,
-body.dark-mode .contact-info-card p,
-body.dark-mode .contact-form-intro,
-body.dark-mode .location-card > p,
-body.dark-mode .hours-row span,
-body.dark-mode .faq-grid details p {
-    color: #aeb8c4;
-}
-
-body.dark-mode .preview-info strong {
-    color: #f1f5f9;
-}
-
-body.dark-mode .preview-note {
-    background: #24191c;
-    border-color: #4b292e;
-}
-
-body.dark-mode .contact-form-wrapper
-.form-group input,
-body.dark-mode .contact-form-wrapper
-.form-group select,
-body.dark-mode .contact-form-wrapper
-.form-group textarea {
-    background: #151c25;
+/* Readable text throughout the website */
+body.dark-mode * {
+    color: #e8edf4 !important;
     border-color: #364352;
-    color: #f1f5f9;
 }
 
-body.dark-mode .contact-form-wrapper
-.form-group input::placeholder,
-body.dark-mode .contact-form-wrapper
-.form-group textarea::placeholder {
-    color: #7f8b99;
+/* Main page surfaces */
+body.dark-mode header,
+body.dark-mode nav,
+body.dark-mode footer,
+body.dark-mode main,
+body.dark-mode section {
+    background-color: #111923 !important;
 }
 
-body.dark-mode .map-placeholder {
-    background: linear-gradient(
-        135deg,
-        #26313d,
-        #1c2530
-    );
-
-    color: #f1f5f9;
+/* Cards, panels and form sections */
+body.dark-mode article,
+body.dark-mode [class*="card"],
+body.dark-mode [class*="wrapper"],
+body.dark-mode [class*="form-section"],
+body.dark-mode [class*="info"],
+body.dark-mode [class*="steps"],
+body.dark-mode .sell-agreement,
+body.dark-mode .sell-form-header,
+body.dark-mode .comparison-card,
+body.dark-mode .garage-card {
+    background-color: #1c2530 !important;
+    color: #e8edf4 !important;
+    border-color: #364352 !important;
 }
 
-body.dark-mode .map-placeholder span {
-    color: #aeb8c4;
+/* Headings and normal content */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode label,
+body.dark-mode small,
+body.dark-mode strong,
+body.dark-mode td,
+body.dark-mode th {
+    color: #e8edf4 !important;
 }
 
-
-
-body.dark-mode .contact-quick-links a {
-    color: #f1f5f9;
+/* Links and brand accents */
+body.dark-mode a,
+body.dark-mode .logo,
+body.dark-mode [class*="price"],
+body.dark-mode [class*="accent"] {
+    color: #ff737d !important;
 }
 
-
-
-body.dark-mode .hours-row {
-    border-color: #2d3946;
+/* Keep navigation links easy to read */
+body.dark-mode nav a {
+    color: #e8edf4 !important;
 }
 
-
-
-body.dark-mode .sell-steps article > span {
-    background: #301c20;
+/* Inputs, dropdowns and text areas */
+body.dark-mode input:not([type="checkbox"]):not([type="radio"]),
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #151c25 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #465363 !important;
 }
 
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #aeb8c4 !important;
+    opacity: 1;
+}
 
+body.dark-mode input[type="checkbox"],
+body.dark-mode input[type="radio"] {
+    accent-color: #e63946;
+}
 
-body,
-body * {
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        border-color 0.3s ease;
+/* All buttons: visible without hovering */
+body.dark-mode button,
+body.dark-mode input[type="button"],
+body.dark-mode input[type="submit"],
+body.dark-mode input[type="reset"],
+body.dark-mode [role="button"],
+body.dark-mode a[class*="button"],
+body.dark-mode a[class*="btn"] {
+    background: #273444 !important;
+    color: #ffffff !important;
+    border: 1px solid #526174 !important;
+    opacity: 1 !important;
+    text-decoration: none;
+}
+
+/* Ensure icons and text inside buttons remain visible */
+body.dark-mode button *,
+body.dark-mode [role="button"] *,
+body.dark-mode a[class*="button"] *,
+body.dark-mode a[class*="btn"] * {
+    color: #ffffff !important;
+}
+
+/* Primary actions and form submissions retain the red brand accent */
+body.dark-mode .primary-button,
+body.dark-mode .sell-button,
+body.dark-mode .compare-button,
+body.dark-mode .compare-btn,
+body.dark-mode .contact-submit,
+body.dark-mode .sell-submit-button,
+body.dark-mode button[type="submit"],
+body.dark-mode input[type="submit"],
+body.dark-mode button[id*="compare"],
+body.dark-mode a[class*="compare"] {
+    background: #c92f3c !important;
+    color: #ffffff !important;
+    border-color: #e63946 !important;
+}
+
+/* Secondary and outline actions */
+body.dark-mode .secondary-button,
+body.dark-mode .outline-button,
+body.dark-mode .search-button,
+body.dark-mode .details-button,
+body.dark-mode .clear-garage-button {
+    background: #273444 !important;
+    color: #ffffff !important;
+    border-color: #526174 !important;
+}
+
+/* Favourite controls */
+body.dark-mode .favourite-button,
+body.dark-mode .vehicle-favourite,
+body.dark-mode .card-favourite {
+    background: #273444 !important;
+    color: #ff737d !important;
+    border-color: #526174 !important;
+}
+
+/* Dark-mode toggle */
+body.dark-mode #darkModeToggle,
+body.dark-mode .dark-mode-toggle {
+    display: inline-block;
+    background: #273444 !important;
+    color: #ffffff !important;
+    border: 1px solid #64748b !important;
+    border-radius: 8px;
+    padding: 10px 14px;
+    opacity: 1 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover and keyboard focus */
+body.dark-mode button:hover,
+body.dark-mode a[class*="button"]:hover,
+body.dark-mode a[class*="btn"]:hover,
+body.dark-mode #darkModeToggle:hover {
+    filter: brightness(1.15);
+    cursor: pointer;
+}
+
+body.dark-mode button:focus-visible,
+body.dark-mode a:focus-visible,
+body.dark-mode input:focus-visible,
+body.dark-mode select:focus-visible,
+body.dark-mode textarea:focus-visible {
+    outline: 2px solid #ff737d;
+    outline-offset: 2px;
+}
+
+/* Disabled controls */
+body.dark-mode button:disabled,
+body.dark-mode input:disabled {
+    background: #374151 !important;
+    color: #d1d5db !important;
+    opacity: 0.75 !important;
+    cursor: not-allowed;
+}
+
+/* Remove leftover light-colored surfaces everywhere.
+   Reapply the intended dark surfaces below. */
+body.dark-mode.dark-mode * {
+    background-color: transparent !important;
+}
+
+/* Main page surfaces */
+body.dark-mode.dark-mode,
+body.dark-mode.dark-mode header,
+body.dark-mode.dark-mode nav,
+body.dark-mode.dark-mode main,
+body.dark-mode.dark-mode section,
+body.dark-mode.dark-mode footer,
+body.dark-mode.dark-mode form,
+body.dark-mode.dark-mode aside {
+    background-color: #111923 !important;
+    color: #e8edf4 !important;
+}
+
+/* Cards, panels, form sections and content boxes */
+body.dark-mode.dark-mode article,
+body.dark-mode.dark-mode [class*="card"],
+body.dark-mode.dark-mode [class*="wrapper"],
+body.dark-mode.dark-mode [class*="panel"],
+body.dark-mode.dark-mode [class*="form-section"],
+body.dark-mode.dark-mode [class*="info"],
+body.dark-mode.dark-mode [class*="details"],
+body.dark-mode.dark-mode [class*="steps"],
+body.dark-mode.dark-mode [class*="agreement"],
+body.dark-mode.dark-mode [class*="message"],
+body.dark-mode.dark-mode table,
+body.dark-mode.dark-mode thead,
+body.dark-mode.dark-mode tbody,
+body.dark-mode.dark-mode tr {
+    background-color: #1c2530 !important;
+    color: #e8edf4 !important;
+    border-color: #364352 !important;
+}
+
+/* Form controls */
+body.dark-mode.dark-mode input:not([type="checkbox"]):not([type="radio"]),
+body.dark-mode.dark-mode select,
+body.dark-mode.dark-mode textarea {
+    background-color: #151c25 !important;
+    color: #f1f5f9 !important;
+    border-color: #465363 !important;
+}
+
+/* Buttons and clickable actions */
+body.dark-mode.dark-mode button,
+body.dark-mode.dark-mode input[type="button"],
+body.dark-mode.dark-mode input[type="submit"],
+body.dark-mode.dark-mode input[type="reset"],
+body.dark-mode.dark-mode [role="button"],
+body.dark-mode.dark-mode a[class*="button"],
+body.dark-mode.dark-mode a[class*="btn"] {
+    background-color: #273444 !important;
+    color: #ffffff !important;
+    border-color: #526174 !important;
+    opacity: 1 !important;
+}
+
+/* Red primary actions */
+body.dark-mode.dark-mode .primary-button,
+body.dark-mode.dark-mode .sell-button,
+body.dark-mode.dark-mode .contact-submit,
+body.dark-mode.dark-mode .sell-submit-button,
+body.dark-mode.dark-mode button[type="submit"],
+body.dark-mode.dark-mode [class*="compare"] {
+    background-color: #c92f3c !important;
+    color: #ffffff !important;
+    border-color: #e63946 !important;
+}
+
+/* Keep theme toggle visible */
+body.dark-mode.dark-mode #darkModeToggle,
+body.dark-mode.dark-mode .dark-mode-toggle {
+    background-color: #273444 !important;
+    color: #ffffff !important;
+    border: 1px solid #64748b !important;
+}
+
+/* Keep images and icons intact */
+body.dark-mode.dark-mode img,
+body.dark-mode.dark-mode video,
+body.dark-mode.dark-mode canvas {
+    background-color: transparent !important;
+}
+
+/* Preserve readable text and brand accents */
+body.dark-mode.dark-mode h1,
+body.dark-mode.dark-mode h2,
+body.dark-mode.dark-mode h3,
+body.dark-mode.dark-mode h4,
+body.dark-mode.dark-mode p,
+body.dark-mode.dark-mode label,
+body.dark-mode.dark-mode li,
+body.dark-mode.dark-mode th,
+body.dark-mode.dark-mode td,
+body.dark-mode.dark-mode small,
+body.dark-mode.dark-mode strong {
+    color: #e8edf4 !important;
+}
+
+body.dark-mode.dark-mode .logo,
+body.dark-mode.dark-mode [class*="price"],
+body.dark-mode.dark-mode [class*="accent"] {
+    color: #ff737d !important;
+}
+
+body.dark-mode.dark-mode nav a {
+    color: #e8edf4 !important;
 }
