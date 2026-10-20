@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ChipicarsKE Garage - View and manage your saved vehicles."
+    >
+
+    <title>My Garage | ChipicarsKE</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <nav aria-label="Main navigation">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="cars.html">
+            More Rides
+        </a>
+
+        <a href="compare.html">
+            Compare
+        </a>
+
+        <a href="garage.html" class="active">
+            Garage
+        </a>
+
+        <a href="index.html#sell">
+            Sell
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <button
+            class="favourite-button"
+            type="button"
+            aria-label="View favourite cars"
+        >
+
+            ♥
+            <span id="favoriteCount">0</span>
+
+        </button>
+
+
+        <button
+            class="sell-button"
+            type="button"
+            onclick="window.location.href='index.html#sell'"
+        >
+            Sell My Car
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     GARAGE HERO
+     ===================================================== -->
+
+<main>
+
+<section class="garage-hero">
+
+    <div class="garage-hero-content">
+
+        <span class="section-label">
+            MY GARAGE
+        </span>
+
+        <h1>
+            Your Cars.
+            <span>Your Shortlist.</span>
+        </h1>
+
+        <p>
+            Keep track of the vehicles you love.
+            Save your favourites, compare your options,
+            and find your next drive with confidence.
+        </p>
+
+    </div>
+
+
+    <div class="garage-hero-icon">
+
+        <span>
+            ♥
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GARAGE CONTENT
+     ===================================================== -->
+
+<section class="garage-main">
+
+    <div class="garage-heading">
+
+        <div>
+
+            <span class="section-label">
+                SAVED VEHICLES
+            </span>
+
+            <h2>
+                Your Favourite Cars
+            </h2>
+
+            <p id="garageSubtitle">
+                Your saved vehicles will appear here.
+            </p>
+
+        </div>
+
+
+        <div class="garage-actions">
+
+            <a
+                href="cars.html"
+                class="outline-button"
+            >
+                Browse Cars →
+            </a>
+
+            <button
+                type="button"
+                class="clear-garage-button"
+                id="clearGarageButton"
+            >
+                Clear Garage
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SAVED VEHICLES
+         ================================================= -->
+
+    <div
+        class="garage-grid"
+        id="garageGrid"
+    >
+
+        <!-- JavaScript inserts saved vehicles here -->
+
+    </div>
+
+
+
+    <!-- =================================================
+         EMPTY GARAGE
+         ================================================= -->
+
+    <div
+        class="garage-empty"
+        id="garageEmpty"
+    >
+
+        <div class="empty-garage-icon">
+            ♡
+        </div>
+
+        <h2>
+            Your garage is empty
+        </h2>
+
+        <p>
+            You haven't saved any vehicles yet.
+            Browse our listings and tap the heart
+            to add a car to your garage.
+        </p>
+
+        <a
+            href="cars.html"
+            class="primary-button"
+        >
+            Explore Cars →
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GARAGE TIPS
+     ===================================================== -->
+
+<section class="garage-tips">
+
+    <div class="section-title">
+
+        <span class="section-label">
+            SMART SHOPPING
+        </span>
+
+        <h2>
+            Make Your Shortlist Work for You
+        </h2>
+
+        <p>
+            Save your favourite vehicles and compare
+            them before making your final decision.
+        </p>
+
+    </div>
+
+
+    <div class="garage-tip-grid">
+
+
+        <article class="garage-tip">
+
+            <div class="garage-tip-icon">
+                ♥
+            </div>
+
+            <h3>
+                Save Favourites
+            </h3>
+
+            <p>
+                Keep interesting vehicles in one place
+                so you don't lose track of them.
+            </p>
+
+        </article>
+
+
+
+        <article class="garage-tip">
+
+            <div class="garage-tip-icon">
+                ⇄
+            </div>
+
+            <h3>
+                Compare Cars
+            </h3>
+
+            <p>
+                Compare prices, engines, fuel type,
+                year and other important details.
+            </p>
+
+        </article>
+
+
+
+        <article class="garage-tip">
+
+            <div class="garage-tip-icon">
+                ✓
+            </div>
+
+            <h3>
+                Choose With Confidence
+            </h3>
+
+            <p>
+                Narrow down your shortlist before
+                contacting a seller.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    <div class="logo">
+
+        <h2>
+            Chipicars<span>KE</span>
+        </h2>
+
+        <p>
+            Find Your Next Drive
+        </p>
+
+    </div>
+
+
+    <p>
+        © 2026 ChipicarsKE.
+        Built for the Kenyan automotive market.
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>

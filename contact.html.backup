@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ChipicarsKE</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ===================================================== NAVIGATION ===================================================== -->
+     <header class="navbar">
+
+<div class="logo">
+
+    <h2>
+        Chipicars<span>KE</span>
+    </h2>
+
+    <p>
+        Find Your Next Drive
+    </p>
+
+</div>
+<nav aria-label="Main navigation">
+
+    <a href="index.html"> 
+       Home
+    </a>
+
+    <a href="cars.html">
+         More Rides 
+    </a>
+
+    <a href="compare.html"> 
+         Compare 
+    </a>
+
+    <a href="garage.html"> 
+         Garage 
+    </a>
+
+
+     <a href="sell.html"> 
+         sell
+    </a>
+
+     <a href="contact.html"> 
+         Contact
+    </a>
+</nav>
+
+     <div class="nav-buttons">
+    
+    <button
+        class="favourite-button"
+        type="button"
+        onclick="window.location.href='garage.html'"
+        aria-label="Open garage"
+    >
+        ♥
+        <span id="favoriteCount">0</span> 
+    </button>
+
+
+    <button
+         class="sell-button"
+         type="button"
+         onclick="window.location.href='sell.html'"
+    >
+         Sell My Car
+    </button>
+
+  </div>
+
+     </header>
+
+
+    <!-- ===================================================== MAIN ===================================================== -->
+
+    <main>
+    
+    <!-- ===================================================== CONTACT HERO ===================================================== -->
+
+    <section class="contact-hero">
+    
+    <div class="contact-hero-content">
+    
+         <span class="section-label">
+             CONTACT CHIPICARSKE
+         </span>
+    
+        <h1>
+            Let's Talk 
+            <span>Cars.</span>
+        </h1>
+
+        <p>
+           Whether you're buying your next vehicle,
+           selling your current one, or simply need
+           some advice, our team is here to help.
+
+        </p>
+
+
+
+        <div class="contact-hero-actions">
+             
+            <a
+              href="tel:+254700000000"
+              class="primary-button"
+            >
+
+               Call us
+            </a>
+
+            <a
+
+              href="https://wa.me/254700000000"
+              target="_blank"
+              rel="noopener"
+              class="secondary-button"
+            >
+              WhatsApp Us
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="contact-hero-card">
+        💬
+    </div>
+
+    <h3>
+        We're Here To Help
+    </h3>
+
+    <p>
+       Questions about a listing?
+       Need help comparing vehicles?
+       Looking to sell?
+
+    </p>
+
+    <strong>
+        Talk to ChipicarsKE.
+    </strong>
+
+  </div>
+
+  </section>
+
+  <!-- ===================================================== CONTACT DETAILS ===================================================== -->
+    
+    <section class="contact-details-section">
+    
+    <div class="section-title">
+
+         <span class="section-label">
+         GET IN TOUCH
+         </span>
+        
+        <h2>
+            Reach Us Directly
+        </h2>
+
+        <p>
+           Choose the contact method that works
+           best for you.
+        </p>
+    </div>
+
+
+    <div class="contact-info-grid">
+
+
+    <!-- PHONE -->
+
+    <article class="contact-info-card">
+    <div class="contact-card-icon">
+         ☎  
+    </div> 
+
+    <span>
+        CALL US
+    </span>
+
+    <h3>
+        +254 700 000 000
+    </h3>
+
+    <p>
+        Speak directly with our team
+        about your vehicle needs.
+    </p>
+
+    <a href="tel:+254700000000">
+       Call Now
+    </a>
+    </article>
+
+   <!-- EMAIL -->
+     
+     <article class="contact-info-card">
+
+        <div class="contact-card-icon">
+             ✉
+        </div>
+
+        <span>
+            EMAIL US
+        </span>
+
+        <h3>
+            support@chipicarske.com
+        </h3>
+
+        <p>
+           Send us your questions and
+           we'll get back to you.
+        </p>
+
+        <a href="mailto:support@chipicarske.com">
+             Send Email →
+        </a>
+
+     </article>
+
+   <!-- WHATSAPP -->
+
+      <article class="contact-info-card">
+
+        <div class="contact-card-icon"> 
+             💬
+        </div>
+
+        <span>
+            WHATSAPP
+        </span>
+
+        <h3>
+            +254 700 000 000
+        </h3>
+
+        <p>
+           Message us on WhatsApp for
+           quick assistance.
+        </p>
+
+        <a
+          href="https://wa.me/254700000000"
+          target="_blank"
+          rel="noopener"
+        >
+          Chat Now →
+        </a>
+    </article>
+
+     <!-- LOCATION -->
+     
+     <article class="contact-info-card">
+
+       <div class="contact-card-icon"> 
+           📍   
+       </div>
+
+       <span>
+           FIND US
+       </span>
+
+       <h3>
+           Nairobi, Kenya
+       </h3>
+
+       <p>
+           Our automotive marketplace is 
+           proudly built for Kenya.
+       </p>
+
+       <a href="#location">
+          View Location →
+       </a>
+     </article>
+
+     </div>
+     </section>
+
+     <!-- ===================================================== CONTACT FORM + LOCATION ===================================================== -->
+
+     <section class="contact-main-section" id="location" >
+     
+     <!-- ================================================= FORM ================================================= -->
+
+     <div class="contact-form-wrapper">
+
+        <span class="section-label">
+            SEND A MESSAGE
+        </span>
+
+        <h2>
+            How Can We Help?
+        </h2>
+
+        <p class="contact-form-intro">
+            Fill in the form and our team will
+            get back to you as soon as possible.
+        </p>
+
+        <form id="contactForm">
+
+            <div class="contact-form-row">
+
+
+                <div class="form-group">
+
+                   <label for="contactName">
+                         Your Name
+                    </label>
+                    
+                    <input
+                        type="text"
+                        id="contactName"
+                        name="name"
+                        placeholder="Enter your name"
+                        autocomplete="name"
+                        required
+                    >
+            </div>
+
+            <div class="form-group">
+
+                 <label for="contactEmail">
+                     Email Address
+                 </label>
+                 
+                 <input
+                    type="email"
+                    id="contactEmail"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                 > 
+
+            </div>
+
+           </div>
+
+           <div class="form-group">
+
+            <label for="contactPhone"> 
+                Phone Number 
+            </label>
+
+            <input
+               type="tel"
+               id="contactPhone"
+               name="phone"
+               placeholder="+254 700 000 000"
+               autocomplete="tel"
+            >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="contactSubject">
+                   What Can We Help With? 
+                </label>
+
+                <select
+                      id="contactSubject"
+                      name="subject"
+                      required
+                >
+
+                <option value="">
+                    Select a subject
+                </option>
+
+                <option value="buying">
+                    I'm looking to buy a car
+                </option>
+
+                <option value="selling">
+                    I want to sell my car
+                </option>
+
+                <option value="listing">
+                    Question about a listing
+                </option>
+
+                <option value="comparison">
+                    Help comparing vehicles
+                </option>
+
+                <option value="garage">
+                    Help with my garage
+                </option>
+
+                <option value="general">
+                    General enquiry
+                </option>
+
+            </select>
+
+           </div>
+
+
+
+           <div class="form-group">
+
+              <label for="contactMessage">
+                Message
+              </label>
+            
+            <textarea
+                 id="contactMessage"
+                 name="message"
+                 rows="6"
+                 placeholder="Tell us how we can help..."
+                 required
+            ></textarea>
+
+            <small id="messageCounter">
+                0 / 500 characters
+            </small>
+        </div>
+    
+    <button
+        type="submit"
+        class="contact-submit"
+    >
+      Send Message →
+    </button>
+
+
+    <div
+        id="contactFormMessage"
+        class="contact-form-message"
+        role="status"
+        aria-live="polite"
+    ></div>
+  
+  </form>
+</div>
+
+    <!-- ================================================= LOCATION / HOURS ================================================= -->
+
+    <aside class="contact-location-wrapper">
+
+    <div class="location-card">
+
+    <span class="section-label">
+            OUR LOCATION
+    </span>
+
+    <h2>
+        Nairobi, Kenya
+    </h2>
+
+    <div class="map-placeholder">
+
+       <div class="map-pin">
+        📍
+       </div>
+
+       <strong>
+           ChipicarsKE
+       </strong>
+
+       <span> 
+             Nairobi, Kenya 
+       </span>
+
+       </div>
+
+       <p>
+          ChipicarsKE connects buyers and
+          sellers across Kenya.
+       </p>
+
+       </div>
+
+       <!-- HOURS -->
+
+       <div class="hours-card">
+
+        <span class="section-label">
+              BUSINESS HOURS
+        </span>
+
+        <h3>
+            When We're Available
+        </h3>
+
+        <div class="hours-row">
+
+            <span> 
+                Monday – Friday 
+            </span>
+
+            <strong>
+                 8:00 AM – 6:00 PM 
+            </strong>
+
+        </div>
+
+        <div class="hours-row">
+
+            <span>
+                 Saturday 
+            </span>
+
+            <strong>
+                 9:00 AM – 4:00 PM 
+            </strong>
+
+        </div>
+
+        <div class="hours-row">
+
+            <span>
+                 Sunday 
+            </span>
+
+            <strong> 
+                Closed 
+            </strong>
+
+        </div>
+      </div>
+
+    <!-- QUICK LINKS -->
+
+    <div class="contact-quick-links">
+
+       <h3>
+          Looking For Something Else?
+       </h3>
+    
+    <a href="cars.html">
+       Browse Cars
+       <span>→</span>
+    </a>
+
+    <a href="compare.html">
+       Compare Vehicles
+       <span>→</span>
+    </a>
+
+    <a href="garage.html">
+       Open My Garage
+       <span>→</span>
+    </a>
+
+    <a href="sell.html">
+       Sell My Car
+       <span>→</span>
+    </a>
+
+  </div>
+
+</aside>
+
+</section>
+
+<!-- =====================================================
+FAQ
+===================================================== -->
+
+<section class="contact-faq">
+
+<div class="section-title">
+
+     <span class="section-label">
+        QUICK ANSWERS
+     </span>
+
+     <h2>
+        Frequently Asked Questions
+     </h2>
+
+     <p> 
+        A few things buyers and sellers often ask us. 
+     </p>
+
+</div>
+
+
+<div class="faq-grid">
+
+
+    <details>
+
+        <summary>
+            How do I contact a vehicle seller?
+        </summary>
+
+        <p>
+            Open the vehicle listing and use 
+            the contact details provided by the 
+            seller.
+        </p>
+
+    </details>
+
+    <details>
+
+        <summary>
+            Can I compare vehicles?
+        </summary>
+
+        <p>
+           Yes. Add vehicles to your comparison
+           list and use the Compare page to
+           evaluate their specifications and prices.
+        </p>
+    
+    </details>
+
+    <details>
+
+        <summary>
+            How do I save a vehicle?
+        </summary>
+
+        <p>
+           Click the heart icon on a vehicle
+           to add it to your Garage.
+        </p>
+    
+    </details>
+
+    <details>
+
+        <summary>
+            Can I sell my car on ChipicarsKE?
+        </summary>
+
+        <p>
+           Yes. Visit the Sell page and create
+           your vehicle listing with the required
+           information.
+        </p>
+    
+    </details>
+  
+
+  </div>
+
+  </section>
+
+  </main>
+
+<!-- =====================================================
+FOOTER
+===================================================== -->
+
+<footer>
+
+<div class="logo">
+
+    <h2>
+        Chipicars<span>KE</span>
+    </h2>
+
+    <p>
+        Find Your Next Drive
+    </p>
+
+</div>
+
+<div class="footer-links">
+
+    <a href="index.html">
+        Home
+    </a>
+
+
+    <a href="cars.html">
+        cars
+    </a>
+
+
+    <a href="compare.html">
+        Compare
+    </a>
+
+
+    <a href="garage.html">
+        Garage
+    </a>
+
+
+    <a href="sell.html">
+        Sell
+    </a>
+
+</div>
+
+<p>
+   © 2026 ChipicarsKE.
+   Built for the Kenyan automotive market.
+</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+
+
+           
+
+</body>
+</html>

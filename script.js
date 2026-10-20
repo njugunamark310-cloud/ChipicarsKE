@@ -3067,95 +3067,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// ============================================================
-// CHIPICARSKE — DARK MODE
-// ============================================================
+document.addEventListener("DOMContentLoaded", function () {
+    // Restore the saved theme on every page.
+    const savedTheme = localStorage.getItem("chipicarsTheme");
+    const isDark = savedTheme === "dark";
 
-function initializeDarkMode() {
+    document.body.classList.toggle("dark-mode", isDark);
 
-    const toggle =
-        document.getElementById("darkModeToggle");
+    let toggle = document.getElementById("darkModeToggle");
 
-    // Stop if the button does not exist on this page
+    // Add the button on pages where it is missing.
     if (!toggle) {
-        return;
-    }
+        toggle = document.createElement("button");
+        toggle.id = "darkModeToggle";
+        toggle.type = "button";
+        toggle.className = "dark-mode-toggle";
 
-    // Check if dark mode was previously selected
-    const savedTheme =
-        localStorage.getItem("chipicarsTheme");
+        const nav = document.querySelector("nav");
 
-    if (savedTheme === "dark") {
-
-        document.body.classList.add("dark-mode");
-
-        toggle.textContent =
-            "☀️ Light Mode";
-
-    } else {
-
-        toggle.textContent =
-            "🌙 Dark Mode";
-
-    }
-
-
-    // Listen for button clicks
-    toggle.addEventListener(
-        "click",
-        function () {
-
-            // Add or remove dark-mode
-            document.body.classList.toggle(
-                "dark-mode"
-            );
-
-
-            // Check current state
-            const darkModeEnabled =
-                document.body.classList.contains(
-                    "dark-mode"
-                );
-
-
-            // Update button and save preference
-            if (darkModeEnabled) {
-
-                toggle.textContent =
-                    "☀️ Light Mode";
-
-                localStorage.setItem(
-                    "chipicarsTheme",
-                    "dark"
-                );
-
-            } else {
-
-                toggle.textContent =
-                    "🌙 Dark Mode";
-
-                localStorage.setItem(
-                    "chipicarsTheme",
-                    "light"
-                );
-
-            }
-
+        if (nav) {
+            nav.appendChild(toggle);
+        } else {
+            document.body.prepend(toggle);
         }
-    );
-
-}
-
-
-// ============================================================
-// INITIALIZE DARK MODE
-// ============================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        initializeDarkMode();
-
+    } else {
+        // Remove any old click handlers to prevent double toggling.
+        const replacement = toggle.cloneNode(true);
+        toggle.replaceWith(replacement);
+        toggle = replacement;
     }
-);
+
+    toggle.classList.add("dark-mode-toggle");
+    toggle.setAttribute("aria-label", "Toggle dark mode");
+
+    function updateThemeButton() {
+        const darkMode = document.body.classList.contains("dark-mode");
+
+        toggle.textContent = darkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
+        toggle.setAttribute("aria-pressed", String(darkMode));
+    }
+
+    updateThemeButton();
+
+    toggle.addEventListener("click", function () {
+        const darkMode = document.body.classList.toggle("dark-mode");
+
+        localStorage.setItem(
+            "chipicarsTheme",
+            darkMode ? "dark" : "light"
+        );
+
+        updateThemeButton();
+    });
+});
